@@ -1,7 +1,6 @@
 package com.gbsfo.ecommerce.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,23 +43,13 @@ public class Order extends IdentifiableEntity implements Serializable {
     @Column(name = "order_status", length = 20)
     private OrderStatus status;
 
-    @NotNull
-    @JsonProperty("total_items")
-    @Column(name = "total_items", precision = 10, scale = 2)
-    private BigDecimal totalItems;
-
-    @NotNull
-    @JsonProperty("total_payments")
-    @Column(name = "total_payments", precision = 10, scale = 2)
-    private BigDecimal totalPayments;
+    @JsonIgnore
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Item> total_items = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    private List<Item> items = new ArrayList<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    private List<Payment> payments = new ArrayList<>();
+    private List<Payment> total_payments = new ArrayList<>();
 }

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class IdentifiableEntity {
+public class IdentifiableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

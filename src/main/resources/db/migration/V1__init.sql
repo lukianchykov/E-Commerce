@@ -1,33 +1,33 @@
-CREATE TABLE `payment`
+CREATE TABLE `order`
 (
-    id                BIGINT         NOT NULL AUTO_INCREMENT,
-    number            VARCHAR(255)   NOT NULL,
-    sum               DECIMAL(19, 2) NOT NULL,
-    payment_date_time TIMESTAMP      NOT NULL,
-    order_id          BIGINT         NOT NULL,
-    PRIMARY KEY (id)
-);
+    `id`           bigint(20)   NOT NULL AUTO_INCREMENT,
+    `number`       varchar(255) NOT NULL,
+    `order_status` varchar(20)  NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE `item`
 (
-    id       BIGINT         NOT NULL AUTO_INCREMENT,
-    name     VARCHAR(255)   NOT NULL,
-    price    DECIMAL(19, 2) NOT NULL,
-    order_id BIGINT         NOT NULL,
-    PRIMARY KEY (id)
-);
+    `id`       bigint(20)     NOT NULL AUTO_INCREMENT,
+    `name`     varchar(255)   NOT NULL,
+    `price`    decimal(19, 2) NOT NULL,
+    `order_id` bigint(20)     NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `FK_ITEM_ORDER_ID` (`order_id`),
+    CONSTRAINT `FK_ITEM_ORDER_ID` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
 
-CREATE TABLE `order`
+CREATE TABLE `payment`
 (
-    id             BIGINT                                                  NOT NULL AUTO_INCREMENT,
-    number         VARCHAR(255)                                            NOT NULL,
-    order_status   ENUM ('CREATED', 'PROCESSING', 'SHIPPING', 'DELIVERED') NOT NULL,
-    total_items    DECIMAL(19, 2)                                          NOT NULL,
-    total_payments DECIMAL(19, 2)                                          NOT NULL,
-    PRIMARY KEY (id)
-);
-
-alter table payment
-    add constraint FK458pu56xefty15ugupb46wrin foreign key (order_id) references `order` (`id`);
-alter table item
-    add constraint FK7uhgl4ukxmr9cifj0e3cersf2 foreign key (order_id) references `order` (`id`);
+    `id`              bigint(20)     NOT NULL AUTO_INCREMENT,
+    `number`          varchar(255)   NOT NULL,
+    `sum`             decimal(19, 2) NOT NULL,
+    `paymentDateTime` datetime       NOT NULL,
+    `order_id`        bigint(20)     NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `FK_PAYMENT_ORDER_ID` (`order_id`),
+    CONSTRAINT `FK_PAYMENT_ORDER_ID` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
