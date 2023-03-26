@@ -11,9 +11,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,24 +30,27 @@ public class Order extends IdentifiableEntity implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
 
-    @NotNull
     @JsonProperty("number")
-    @Column(name = "number")
+    @Column(name = "number", nullable = false)
     private String number;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     @JsonProperty("order_status")
-    @Column(name = "order_status", length = 20)
-    private OrderStatus status;
+    @Column(name = "order_status", length = 20, nullable = false)
+    private OrderStatus orderStatus;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<Item> total_items = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<Payment> total_payments = new ArrayList<>();
+
+    public enum OrderStatus {
+        @JsonProperty("CREATED") CREATED,
+        @JsonProperty("PROCESSING") PROCESSING,
+        @JsonProperty("SHIPPING") SHIPPING,
+        @JsonProperty("DELIVERED") DELIVERED
+    }
 }

@@ -2,14 +2,14 @@ package com.gbsfo.ecommerce.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,6 +18,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Entity
@@ -30,22 +31,22 @@ public class Payment extends IdentifiableEntity implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298237L;
 
-    @NotNull
     @JsonProperty("number")
+    @Column(name = "number", nullable = false)
     private String number;
 
-    @NotNull
     @JsonProperty("sum")
+    @Column(name = "sum", nullable = false)
     private BigDecimal sum;
 
-    @NotNull
     @JsonProperty("paymentDateTime")
-    private LocalDateTime paymentDateTime;
+    @Column(name = "payment_date_time", nullable = false)
+    @CreationTimestamp
+    private Instant paymentDateTime;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Order order;
 }
