@@ -18,16 +18,16 @@ public class OrderSearchSpecifications {
                 .orElse(criteriaBuilder.conjunction());
     }
 
-    public static Specification<Order> numberEquals(String firstName) {
+    public static Specification<Order> numberEquals(String number) {
         return (root, query, criteriaBuilder) ->
-            Optional.ofNullable(firstName)
+            Optional.ofNullable(number)
                 .map(val -> criteriaBuilder.equal(root.get(Order_.NUMBER), val))
                 .orElse(criteriaBuilder.conjunction());
     }
 
-    public static Specification<Order> orderStatusEquals(String lastName) {
+    public static Specification<Order> orderStatusEquals(String orderStatus) {
         return (root, query, criteriaBuilder) ->
-            Optional.ofNullable(lastName)
+            Optional.ofNullable(orderStatus)
                 .map(val -> criteriaBuilder.equal(root.get(Order_.ORDER_STATUS), val))
                 .orElse(criteriaBuilder.conjunction());
     }

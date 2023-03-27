@@ -18,11 +18,11 @@ public class LogStructuredArguments {
         return StructuredArguments.keyValue(ORDER_ID, orderId);
     }
 
-    public static StructuredArgument itemId(String itemId) {
+    public static StructuredArgument itemId(long itemId) {
         return StructuredArguments.keyValue(ITEM_ID, itemId);
     }
 
-    public static StructuredArgument paymentId(String paymentId) {
+    public static StructuredArgument paymentId(long paymentId) {
         return StructuredArguments.keyValue(PAYMENT_ID, paymentId);
     }
 }

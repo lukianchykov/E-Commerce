@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
-import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.dto.IterableDataResponse;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
@@ -40,14 +39,14 @@ public class OrderFacade {
     }
 
     public OrderDto findByNumber(String number) {
-        Order orderByNumber = orderService.findByNumber(number)
-            .orElseThrow(() -> new ResourceNotFoundException("Did not found by number", number));
+        var orderByNumber = orderService.findByNumber(number)
+            .orElseThrow(() -> new ResourceNotFoundException("Order not found by number", number));
         return orderMapper.toDto(orderByNumber);
     }
 
     public OrderDto createOrder(OrderDto orderDto) {
-        var order = orderMapper.toEntity(orderDto);
-        order = orderService.createOrder(order);
+        var orderFromDto = orderMapper.toEntity(orderDto);
+        var order = orderService.createOrder(orderFromDto);
         return orderMapper.toDto(order);
     }
 

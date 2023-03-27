@@ -1,5 +1,7 @@
 package com.gbsfo.ecommerce.dto;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gbsfo.ecommerce.utils.jackson.ApiJacksonSettings;
 import lombok.AllArgsConstructor;
@@ -12,16 +14,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiJacksonSettings
 @AllArgsConstructor
-public class OrderLookupPublicApiRequest {
+public class ItemLookupPublicApiRequest {
 
     @JsonProperty("id")
     private String id;
 
-    @JsonProperty("number")
-    private String number;
+    @JsonProperty("name")
+    private String name;
 
-    @JsonProperty("order_status")
-    private String orderStatus;
+    @JsonProperty("price")
+    private BigDecimal price;
 
     @JsonProperty("offset")
     private int offset;
@@ -29,9 +31,9 @@ public class OrderLookupPublicApiRequest {
     @JsonProperty("limit")
     private int limit;
 
-    public OrderLookupPublicApiRequest(String number, String orderStatus, int offset, int limit) {
-        this.number = number;
-        this.orderStatus = orderStatus;
+    public ItemLookupPublicApiRequest(String name, BigDecimal price, int offset, int limit) {
+        this.name = name;
+        this.price = price;
         this.offset = offset;
         this.limit = limit;
     }
