@@ -1,6 +1,6 @@
 package com.gbsfo.ecommerce.controller.handler;
 
-import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 
 import com.gbsfo.ecommerce.controller.ItemController;
 import com.gbsfo.ecommerce.controller.OrderController;
@@ -21,8 +21,8 @@ import org.springframework.web.context.request.WebRequest;
 @Slf4j
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    protected ResponseEntity<ApiError> handleError(ConstraintViolationException ex, WebRequest request) {
+    @ExceptionHandler(ValidationException.class)
+    protected ResponseEntity<ApiError> handleError(ValidationException ex, WebRequest request) {
         log.error(ex.toString(), ex);
         ApiError apiError = new ApiError(ex);
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
@@ -43,8 +43,8 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    protected ResponseEntity<ApiError> handleError(IllegalArgumentException ex, WebRequest request) {
+    @ExceptionHandler(IllegalStateException.class)
+    protected ResponseEntity<ApiError> handleError(IllegalStateException ex, WebRequest request) {
         log.error(ex.toString(), ex);
         ApiError apiError = new ApiError(ex);
         return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);

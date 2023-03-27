@@ -3,10 +3,12 @@ package com.gbsfo.ecommerce.service.impl;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
+import javax.validation.ValidationException;
 
 import com.gbsfo.ecommerce.controller.exception.ResourceAlreadyExistException;
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
 import com.gbsfo.ecommerce.domain.Order;
+import com.gbsfo.ecommerce.domain.Order.OrderStatus;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
 import com.gbsfo.ecommerce.mapper.OrderMapper;
@@ -67,7 +69,7 @@ public class OrderService implements IOrderService {
     public Optional<Order> findByNumber(String number) {
         if (StringUtils.isBlank(number)) {
             log.error("Number is blank: {}", number);
-            throw new IllegalArgumentException("Number is blank: " + number);
+            throw new IllegalStateException("Number is blank: " + number);
         }
         return orderRepository.findFirstByNumberEquals(number);
     }
@@ -91,8 +93,10 @@ public class OrderService implements IOrderService {
             .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: ", orderId));
         var orderFromRequest = orderMapper.toEntity(orderRequest);
 
+        validateOrderCanBeUpdated(orderInDatabase, orderFromRequest.getOrderStatus());
+
         log.info("Updating order in database, source = {}, target = {}", orderInDatabase, orderFromRequest);
-        BeanUtils.copyProperties(orderInDatabase, orderFromRequest, "id", "number", "orderStatus");
+        BeanUtils.copyProperties(orderInDatabase, orderFromRequest, "id", "total_items", "total_payments");
 
         orderFromRequest.getTotal_items().forEach(item -> item.setOrder(orderFromRequest));
         orderFromRequest.getTotal_payments().forEach(payment -> payment.setOrder(orderFromRequest));
@@ -105,6 +109,32 @@ public class OrderService implements IOrderService {
         log.info("Order deleted attempt for {}", orderId(orderId));
         var order = orderRepository.findById(orderId)
             .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: ", orderId));
+
+        validateOrderCanBeDeleted(order);
         orderRepository.deleteById(order.getId());
+    }
+
+    private void validateOrderCanBeDeleted(Order order) {
+        if (order.getOrderStatus() == OrderStatus.SHIPPING || order.getOrderStatus() == OrderStatus.DELIVERED) {
+            throw new ValidationException("Cannot delete order with SHIPPING or DELIVERED status");
+        }
+    }
+
+    private void validateOrderCanBeUpdated(Order order, OrderStatus newStatus) {
+        var currentStatus = order.getOrderStatus();
+
+        if ((newStatus == OrderStatus.SHIPPING || newStatus == OrderStatus.DELIVERED) && !order.allItemsPaid()) {
+            throw new ValidationException("Order items are not fully paid");
+        }
+
+        if ((currentStatus == OrderStatus.SHIPPING || currentStatus == OrderStatus.DELIVERED) && newStatus != currentStatus) {
+            throw new ValidationException("Cannot update order with SHIPPING or DELIVERED status");
+        }
+
+        if ((currentStatus == OrderStatus.CREATED && newStatus != OrderStatus.PROCESSING)
+            || (currentStatus == OrderStatus.PROCESSING && newStatus != OrderStatus.SHIPPING
+            && newStatus != OrderStatus.DELIVERED)) {
+            throw new ValidationException("Invalid order status transition");
+        }
     }
 }

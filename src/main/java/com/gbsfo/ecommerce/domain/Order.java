@@ -1,6 +1,7 @@
 package com.gbsfo.ecommerce.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,17 @@ public class Order extends IdentifiableEntity implements Serializable {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.JOIN)
     private List<Payment> total_payments = new ArrayList<>();
+
+    public boolean allItemsPaid() {
+        BigDecimal totalPaid = total_payments.stream()
+            .map(Payment::getSum)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal totalCost = total_items.stream()
+            .map(Item::getPrice)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return totalPaid.compareTo(totalCost) >= 0;
+    }
 
     public enum OrderStatus {
         @JsonProperty("CREATED") CREATED,
