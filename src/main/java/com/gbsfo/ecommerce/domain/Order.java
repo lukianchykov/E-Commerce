@@ -9,18 +9,25 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.gbsfo.ecommerce.utils.identifiable.IdentifiableEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Data
 @Entity
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(callSuper = true)
@@ -39,12 +46,14 @@ public class Order extends IdentifiableEntity implements Serializable {
     @Column(name = "order_status", length = 20, nullable = false)
     private OrderStatus orderStatus;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
+    @Builder.Default
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
     private List<Item> total_items = new ArrayList<>();
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
+    @Builder.Default
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
     private List<Payment> total_payments = new ArrayList<>();
 
     public enum OrderStatus {

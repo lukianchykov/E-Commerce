@@ -1,4 +1,4 @@
-package com.gbsfo.ecommerce.dto;
+package com.gbsfo.ecommerce.utils.identifiable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

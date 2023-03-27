@@ -6,24 +6,23 @@ import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
+import com.gbsfo.ecommerce.utils.identifiable.IdentifiableEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@SuperBuilder
+@RequiredArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "payment")
@@ -44,9 +43,8 @@ public class Payment extends IdentifiableEntity implements Serializable {
     @CreationTimestamp
     private Instant paymentDateTime;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
     @ToString.Exclude
     private Order order;
 }
