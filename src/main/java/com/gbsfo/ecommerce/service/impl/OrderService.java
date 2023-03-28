@@ -1,5 +1,6 @@
 package com.gbsfo.ecommerce.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -7,8 +8,10 @@ import javax.transaction.Transactional;
 import com.gbsfo.ecommerce.controller.exception.ResourceAlreadyExistException;
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
 import com.gbsfo.ecommerce.domain.Order;
+import com.gbsfo.ecommerce.dto.ItemDto;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
+import com.gbsfo.ecommerce.mapper.ItemMapper;
 import com.gbsfo.ecommerce.mapper.OrderMapper;
 import com.gbsfo.ecommerce.repository.OrderRepository;
 import com.gbsfo.ecommerce.service.IOrderService;
@@ -37,6 +40,9 @@ public class OrderService implements IOrderService {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private ItemMapper itemMapper;
 
     /**
      * Public API find orders request
@@ -83,6 +89,24 @@ public class OrderService implements IOrderService {
 
         order.getTotal_items().forEach(item -> item.setOrder(order));
         order.getTotal_payments().forEach(payment -> payment.setOrder(order));
+
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order addItemsInOrder(Long orderId, List<ItemDto> itemsFromRequest) {
+        var order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: ", orderId));
+        var items = itemMapper.toEntity(itemsFromRequest);
+
+        if (!order.canAddItemsToOrder(order)) {
+            log.error("Items can`t be added to {} ", orderId(orderId));
+            throw new IllegalStateException("Items can`t be added to: " + orderId(orderId));
+        }
+
+        log.info("Saving order in database {}", order);
+
+        order.getTotal_items().addAll(items);
 
         return orderRepository.save(order);
     }

@@ -1,8 +1,10 @@
 package com.gbsfo.ecommerce.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.gbsfo.ecommerce.domain.Order;
+import com.gbsfo.ecommerce.dto.ItemDto;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
 
@@ -15,6 +17,8 @@ public interface IOrderService {
     Page<Order> findOrders(OrderLookupPublicApiRequest request);
 
     Optional<Order> findByNumber(String number);
+
+    Order addItemsInOrder(Long orderId, List<ItemDto> items);
 
     Order createOrder(OrderDto order);
 

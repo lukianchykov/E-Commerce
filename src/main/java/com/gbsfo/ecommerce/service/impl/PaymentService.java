@@ -89,10 +89,10 @@ public class PaymentService implements IPaymentService {
             .orElseThrow(() -> new ResourceNotFoundException("Payment not found with id: ", paymentId));
         var paymentFromRequest = paymentMapper.toEntity(paymentRequest);
 
-        log.info("Updating Payment in database, source = {}, target = {}", paymentInDatabase, paymentFromRequest);
-        BeanUtils.copyProperties(paymentInDatabase, paymentFromRequest, "id", "paymentDateTime");
+        log.info("Updating Payment in database, source = {}, target = {}", paymentFromRequest, paymentInDatabase);
+        BeanUtils.copyProperties(paymentFromRequest, paymentInDatabase, "id", "paymentDateTime");
 
-        return paymentRepository.save(paymentFromRequest);
+        return paymentRepository.save(paymentInDatabase);
     }
 
     @Override

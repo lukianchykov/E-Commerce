@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.gbsfo.ecommerce.dto.ItemDto;
 import com.gbsfo.ecommerce.dto.IterableDataResponse;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
@@ -59,6 +60,11 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderDto> createOrder(@Valid @RequestBody OrderDto order) {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderFacade.createOrder(order));
+    }
+
+    @PostMapping("/{id}/items")
+    public ResponseEntity<OrderDto> addItemsToOrder(@PathVariable(value = "id") Long orderId, @Valid @RequestBody List<ItemDto> items) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderFacade.addItemsToOrder(orderId, items));
     }
 
     @PutMapping("/{id}")

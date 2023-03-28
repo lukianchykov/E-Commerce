@@ -10,8 +10,10 @@ import com.gbsfo.ecommerce.domain.Item;
 import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.domain.Order.OrderStatus;
 import com.gbsfo.ecommerce.domain.Payment;
+import com.gbsfo.ecommerce.dto.ItemDto;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
+import com.gbsfo.ecommerce.mapper.ItemMapper;
 import com.gbsfo.ecommerce.mapper.OrderMapper;
 import com.gbsfo.ecommerce.repository.OrderRepository;
 import com.gbsfo.ecommerce.service.impl.OrderService;
@@ -55,6 +57,9 @@ public class OrderServiceTest {
 
     @MockBean
     private OrderMapper orderMapper;
+
+    @MockBean
+    private ItemMapper itemMapper;
 
     private Order order;
 
@@ -123,15 +128,22 @@ public class OrderServiceTest {
     }
 
     @Test
+    public void verify_findOrderByNumber() {
+        Optional<Order> actual = orderService.findByNumber(order.getNumber());
+        assertEquals(order, actual.get());
+        assertEquals(order.getNumber(), actual.get().getNumber());
+    }
+
+    @Test
     public void createOrder() {
-        Order mock = Order.builder().number("fake").build();
-        when(orderMapper.toEntity(any(OrderDto.class))).thenReturn(mock);
+        Order newOrder = Order.builder().number("fake").build();
+        when(orderMapper.toEntity(any(OrderDto.class))).thenReturn(newOrder);
         OrderDto orderDto = OrderDto.builder().number("number").orderStatus(OrderDto.OrderStatus.CREATED).build();
 
         Order createdOrder = orderService.createOrder(orderDto);
 
         assertNotNull(orderRepository.findById(createdOrder.getId()));
-        assertEquals(mock, createdOrder);
+        assertEquals(newOrder, createdOrder);
     }
 
     @Test
@@ -164,6 +176,7 @@ public class OrderServiceTest {
 
         assertNotEquals(orderDto.getNumber(), savedOrder.getNumber());
 
+        savedOrder.canUpdate(savedOrder);
         Order updatedOrder = orderService.updateOrder(savedOrder.getId(), orderDto);
         assertEquals(orderDto.getNumber(), updatedOrder.getNumber());
     }
@@ -182,6 +195,7 @@ public class OrderServiceTest {
         Order savedOrder = orderRepository.save(newOrder);
         assertNotNull(orderRepository.findById(savedOrder.getId()));
 
+        savedOrder.canUpdate(savedOrder);
         Order updateOrder = orderService.updateOrder(savedOrder.getId(), orderDto);
 
         assertNotNull(orderRepository.findById(updateOrder.getId()));
@@ -193,20 +207,39 @@ public class OrderServiceTest {
     }
 
     @Test
+    public void verify_CanNotAddItemsInOrderWithShippingStatus() {
+        ItemDto item1 = ItemDto.builder().name("Item 1").price(new BigDecimal("10.00")).build();
+        ItemDto item2 = ItemDto.builder().name("Item 2").price(new BigDecimal("20.00")).build();
+        order.setOrderStatus(OrderStatus.SHIPPING);
+        assertFalse(order.canAddItemsToOrder(order));
+        assertThrows(IllegalStateException.class, () -> orderService.addItemsInOrder(order.getId(), List.of(item1, item2)));
+    }
+
+    @Test
+    public void verify_CanNotAddItemsInOrderWithDeliveredStatus() {
+        ItemDto item1 = ItemDto.builder().name("Item 1").price(new BigDecimal("10.00")).build();
+        ItemDto item2 = ItemDto.builder().name("Item 2").price(new BigDecimal("20.00")).build();
+        order.setOrderStatus(OrderStatus.DELIVERED);
+        assertFalse(order.canAddItemsToOrder(order));
+        assertThrows(IllegalStateException.class, () -> orderService.addItemsInOrder(order.getId(), List.of(item1, item2)));
+    }
+
+    @Test
     public void deleteOrder() {
+        assertTrue(order.canDelete(order));
         orderService.deleteOrder(order.getId());
         assertEquals(Optional.empty(), orderRepository.findById(order.getId()));
     }
 
     @Test
-    public void verify_CanNotDeleteOrderInShippingStatus() {
+    public void verify_CanNotDeleteOrderWithShippingStatus() {
         order.setOrderStatus(OrderStatus.SHIPPING);
         assertFalse(order.canDelete(order));
         assertThrows(IllegalStateException.class, () -> orderService.deleteOrder(order.getId()));
     }
 
     @Test
-    public void verify_CanNotDeleteOrderInDeliveredStatusUntilAllItemsArePaid() {
+    public void verify_CanNotDeleteOrderWithDeliveredStatusUntilAllItemsArePaid() {
         Order newOrder = Order.builder().id(3L).number("Numb1").orderStatus(OrderStatus.CREATED).build();
         Item newItem = Item.builder().name("Item 1").price(new BigDecimal("10.00")).build();
         Item newItem2 = Item.builder().name("Item 2").price(new BigDecimal("20.00")).build();

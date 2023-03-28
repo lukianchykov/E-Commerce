@@ -58,7 +58,7 @@ public class ItemService implements IItemService {
 
     @Override
     public Item getItemById(Long itemId) {
-        log.info("Get Order attempt for {}", itemId(itemId));
+        log.info("Get Item attempt for {}", itemId(itemId));
         return itemRepository.findById(itemId)
             .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: ", itemId));
     }
@@ -89,10 +89,10 @@ public class ItemService implements IItemService {
             .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: ", itemId));
         var itemFromRequest = itemMapper.toEntity(itemRequest);
 
-        log.info("Updating order in database, source = {}, target = {}", itemInDatabase, itemFromRequest);
-        BeanUtils.copyProperties(itemInDatabase, itemFromRequest, "id");
+        log.info("Updating item in database, source = {}, target = {}", itemFromRequest, itemInDatabase);
+        BeanUtils.copyProperties(itemFromRequest, itemInDatabase, "id");
 
-        return itemRepository.save(itemFromRequest);
+        return itemRepository.save(itemInDatabase);
     }
 
     @Override

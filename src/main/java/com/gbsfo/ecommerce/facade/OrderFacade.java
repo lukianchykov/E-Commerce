@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
+import com.gbsfo.ecommerce.dto.ItemDto;
 import com.gbsfo.ecommerce.dto.IterableDataResponse;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
@@ -46,6 +47,11 @@ public class OrderFacade {
 
     public OrderDto createOrder(OrderDto orderDto) {
         var order = orderService.createOrder(orderDto);
+        return orderMapper.toDto(order);
+    }
+
+    public OrderDto addItemsToOrder(Long orderId, List<ItemDto> items) {
+        var order = orderService.addItemsInOrder(orderId, items);
         return orderMapper.toDto(order);
     }
 
