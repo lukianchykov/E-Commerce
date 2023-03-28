@@ -75,6 +75,7 @@ public class ItemService implements IItemService {
     @Override
     public Item createItem(Item item) {
         if (findByName(item.getName()).isPresent()) {
+            log.error("Item already exists. Can’t create new {} with same name: {}", itemId(item.getId()), item.getName());
             throw new ResourceAlreadyExistException("Item already exists. Can’t create new Item with same name: " + item.getName());
         }
         log.info("Saving item in database {}", item);

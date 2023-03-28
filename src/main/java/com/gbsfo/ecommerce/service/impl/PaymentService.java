@@ -75,6 +75,7 @@ public class PaymentService implements IPaymentService {
     @Override
     public Payment createPayment(Payment payment) {
         if (findByNumber(payment.getNumber()).isPresent()) {
+            log.error("Payment already exists. Can’t create new {} with same number: {}", paymentId(payment.getId()), payment.getNumber());
             throw new ResourceAlreadyExistException("Payment already exists. Can’t create new Payment with same number: " + payment.getNumber());
         }
         log.info("Saving Payment in database {}", payment);

@@ -77,6 +77,7 @@ public class OrderService implements IOrderService {
     @Override
     public Order createOrder(Order order) {
         if (findByNumber(order.getNumber()).isPresent()) {
+            log.error("Order already exists. Can’t create new {} with same number: {}", orderId(order.getId()), order.getNumber());
             throw new ResourceAlreadyExistException("Order already exists. Can’t create new Order with same number: " + order.getNumber());
         }
         log.info("Saving order in database {}", order);
@@ -116,6 +117,7 @@ public class OrderService implements IOrderService {
 
     private void validateOrderCanBeDeleted(Order order) {
         if (order.getOrderStatus() == OrderStatus.SHIPPING || order.getOrderStatus() == OrderStatus.DELIVERED) {
+            log.error("Cannot delete {} with SHIPPING or DELIVERED status", orderId(order.getId()));
             throw new ValidationException("Cannot delete order with SHIPPING or DELIVERED status");
         }
     }
@@ -124,16 +126,19 @@ public class OrderService implements IOrderService {
         var currentStatus = order.getOrderStatus();
 
         if ((newStatus == OrderStatus.SHIPPING || newStatus == OrderStatus.DELIVERED) && !order.allItemsPaid()) {
+            log.error("Order with {} items are not fully paid", orderId(order.getId()));
             throw new ValidationException("Order items are not fully paid");
         }
 
         if ((currentStatus == OrderStatus.SHIPPING || currentStatus == OrderStatus.DELIVERED) && newStatus != currentStatus) {
+            log.error("Cannot update order with {} status", orderId(order.getId()));
             throw new ValidationException("Cannot update order with SHIPPING or DELIVERED status");
         }
 
         if ((currentStatus == OrderStatus.CREATED && newStatus != OrderStatus.PROCESSING)
             || (currentStatus == OrderStatus.PROCESSING && newStatus != OrderStatus.SHIPPING
             && newStatus != OrderStatus.DELIVERED)) {
+            log.error("Invalid {} status transition", orderId(order.getId()));
             throw new ValidationException("Invalid order status transition");
         }
     }
