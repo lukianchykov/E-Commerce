@@ -16,7 +16,7 @@ public interface IItemService {
 
     Optional<Item> findByName(String name);
 
-    Item createItem(Item item);
+    Item createItem(ItemDto itemDto);
 
     Item updateItem(Long itemId, ItemDto itemDto);
 

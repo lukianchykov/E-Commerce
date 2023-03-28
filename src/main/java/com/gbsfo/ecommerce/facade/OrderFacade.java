@@ -45,8 +45,7 @@ public class OrderFacade {
     }
 
     public OrderDto createOrder(OrderDto orderDto) {
-        var orderFromDto = orderMapper.toEntity(orderDto);
-        var order = orderService.createOrder(orderFromDto);
+        var order = orderService.createOrder(orderDto);
         return orderMapper.toDto(order);
     }
 

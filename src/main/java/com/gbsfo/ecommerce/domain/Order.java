@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,8 +22,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Data
 @Entity
@@ -33,7 +30,7 @@ import org.hibernate.annotations.FetchMode;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "order")
+@Table(name = "orders")
 public class Order extends IdentifiableEntity implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298236L;
@@ -43,18 +40,19 @@ public class Order extends IdentifiableEntity implements Serializable {
     private String number;
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     @JsonProperty("order_status")
     @Column(name = "order_status", length = 20, nullable = false)
-    private OrderStatus orderStatus;
+    private OrderStatus orderStatus = OrderStatus.CREATED;
 
     @Builder.Default
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
+    @ToString.Exclude
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> total_items = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.JOIN)
+    @ToString.Exclude
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Payment> total_payments = new ArrayList<>();
 
     public boolean allItemsPaid() {
@@ -66,6 +64,22 @@ public class Order extends IdentifiableEntity implements Serializable {
             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return totalPaid.compareTo(totalCost) >= 0;
+    }
+
+    public boolean canAddItemsToOrder(Order order) {
+        return !OrderStatus.SHIPPING.equals(order.getOrderStatus())
+            && !OrderStatus.DELIVERED.equals(order.getOrderStatus());
+    }
+
+    public boolean canDelete(Order order) {
+        return !(OrderStatus.PROCESSING.equals(order.getOrderStatus()) || OrderStatus.SHIPPING.equals(order.getOrderStatus())
+            || (OrderStatus.DELIVERED.equals(order.getOrderStatus()) && !order.allItemsPaid()));
+    }
+
+    public boolean canUpdate(Order order) {
+        return (!order.getOrderStatus().equals(OrderStatus.PROCESSING) && !order.getOrderStatus()
+            .equals(OrderStatus.SHIPPING) && !order.getOrderStatus().equals(OrderStatus.DELIVERED))
+            || order.allItemsPaid();
     }
 
     public enum OrderStatus {

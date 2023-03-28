@@ -1,9 +1,6 @@
 package com.gbsfo.ecommerce.mapper;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Collections;
 
 import com.gbsfo.ecommerce.domain.Item;
@@ -13,6 +10,7 @@ import com.gbsfo.ecommerce.domain.Payment;
 import com.gbsfo.ecommerce.dto.ItemDto;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.PaymentDto;
+import com.gbsfo.ecommerce.utils.time.TimeUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,11 +23,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
-@Import({OrderMapperImpl.class, ItemMapperImpl.class, PaymentMapperImpl.class})
+@Import({TimeUtils.class, OrderMapperImpl.class, ItemMapperImpl.class, PaymentMapperImpl.class})
 public class OrderMapperTest {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private TimeUtils timeUtils;
 
     private Order order;
 
@@ -37,8 +38,6 @@ public class OrderMapperTest {
 
     @Before
     public void setUp() {
-        Instant creationDate = LocalDateTime.of(2022, 3, 27, 14, 30).toInstant(ZoneOffset.UTC);
-
         Item item = new Item();
         item.setId(1L);
         item.setPrice(BigDecimal.valueOf(100.0));
@@ -48,7 +47,7 @@ public class OrderMapperTest {
         Payment payment = new Payment();
         payment.setId(1L);
         payment.setSum(BigDecimal.valueOf(100.0));
-        payment.setPaymentDateTime(creationDate);
+        payment.setPaymentDateTime(timeUtils.getCurrentTime());
         payment.setOrder(new Order());
 
         order = new Order();
@@ -67,7 +66,7 @@ public class OrderMapperTest {
         PaymentDto paymentDto = PaymentDto.builder()
             .id(1L)
             .sum(BigDecimal.valueOf(100.0))
-            .paymentDateTime(creationDate)
+            .paymentDateTime(timeUtils.getCurrentTime())
             .build();
 
         orderDto = OrderDto.builder()

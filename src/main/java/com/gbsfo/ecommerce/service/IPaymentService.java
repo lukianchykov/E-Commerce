@@ -16,7 +16,7 @@ public interface IPaymentService {
 
     Optional<Payment> findByNumber(String number);
 
-    Payment createPayment(Payment payment);
+    Payment createPayment(PaymentDto paymentDto);
 
     Payment updatePayment(Long paymentId, PaymentDto paymentDto);
 

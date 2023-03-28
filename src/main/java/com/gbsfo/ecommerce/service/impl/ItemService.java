@@ -69,11 +69,12 @@ public class ItemService implements IItemService {
             log.error("Name is blank: {}", name);
             throw new IllegalStateException("Name is blank: " + name);
         }
-        return itemRepository.findFirstByNameEquals(name);
+        return itemRepository.findByName(name);
     }
 
     @Override
-    public Item createItem(Item item) {
+    public Item createItem(ItemDto itemDto) {
+        var item = itemMapper.toEntity(itemDto);
         if (findByName(item.getName()).isPresent()) {
             log.error("Item already exists. Can’t create new {} with same name: {}", itemId(item.getId()), item.getName());
             throw new ResourceAlreadyExistException("Item already exists. Can’t create new Item with same name: " + item.getName());

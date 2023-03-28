@@ -1,4 +1,4 @@
-CREATE TABLE `order`
+CREATE TABLE `orders`
 (
     `id`           bigint(20)   NOT NULL AUTO_INCREMENT,
     `number`       varchar(255) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE `order`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-CREATE TABLE `item`
+CREATE TABLE `items`
 (
     `id`       bigint(20)     NOT NULL AUTO_INCREMENT,
     `name`     varchar(255)   NOT NULL,
@@ -15,11 +15,11 @@ CREATE TABLE `item`
     `order_id` bigint(20)     NOT NULL,
     PRIMARY KEY (`id`),
     KEY `FK_ITEM_ORDER_ID` (`order_id`),
-    CONSTRAINT `FK_ITEM_ORDER_ID` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `FK_ITEM_ORDER_ID` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-CREATE TABLE `payment`
+CREATE TABLE `payments`
 (
     `id`              bigint(20)     NOT NULL AUTO_INCREMENT,
     `number`          varchar(255)   NOT NULL,
@@ -28,6 +28,6 @@ CREATE TABLE `payment`
     `order_id`        bigint(20)     NOT NULL,
     PRIMARY KEY (`id`),
     KEY `FK_PAYMENT_ORDER_ID` (`order_id`),
-    CONSTRAINT `FK_PAYMENT_ORDER_ID` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `FK_PAYMENT_ORDER_ID` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;

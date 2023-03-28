@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long>, QueryByExampleExecutor<Item>, JpaSpecificationExecutor<Item> {
 
-    Optional<Item> findFirstByNameEquals(String name);
+    Optional<Item> findByName(String name);
 
 }

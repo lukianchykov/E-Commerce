@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long>, QueryByExampleExecutor<Order>, JpaSpecificationExecutor<Order> {
 
-    Optional<Order> findFirstByNumberEquals(String number);
+    Optional<Order> findByNumber(String number);
 
 }

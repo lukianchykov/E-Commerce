@@ -16,7 +16,7 @@ public interface IOrderService {
 
     Optional<Order> findByNumber(String number);
 
-    Order createOrder(Order order);
+    Order createOrder(OrderDto order);
 
     Order updateOrder(Long orderId, OrderDto order);
 

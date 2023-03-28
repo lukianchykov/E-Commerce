@@ -3,8 +3,10 @@ package com.gbsfo.ecommerce.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -23,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @RequiredArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "item")
+@Table(name = "items")
 public class Item extends IdentifiableEntity implements Serializable {
 
     private static final long serialVersionUID = -9017650847571487336L;
@@ -36,8 +38,8 @@ public class Item extends IdentifiableEntity implements Serializable {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
     @ToString.Exclude
     private Order order;
 }

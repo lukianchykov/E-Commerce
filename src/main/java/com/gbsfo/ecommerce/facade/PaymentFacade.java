@@ -45,8 +45,7 @@ public class PaymentFacade {
     }
 
     public PaymentDto createPayment(PaymentDto paymentDto) {
-        var paymentFromDto = paymentMapper.toEntity(paymentDto);
-        var payment = paymentService.createPayment(paymentFromDto);
+        var payment = paymentService.createPayment(paymentDto);
         return paymentMapper.toDto(payment);
     }
 

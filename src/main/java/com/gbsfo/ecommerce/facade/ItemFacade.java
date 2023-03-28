@@ -45,8 +45,7 @@ public class ItemFacade {
     }
 
     public ItemDto createItem(ItemDto itemDto) {
-        var itemFromDto = itemMapper.toEntity(itemDto);
-        var item = itemService.createItem(itemFromDto);
+        var item = itemService.createItem(itemDto);
         return itemMapper.toDto(item);
     }
 

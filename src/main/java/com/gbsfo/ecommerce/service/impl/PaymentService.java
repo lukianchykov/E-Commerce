@@ -69,11 +69,12 @@ public class PaymentService implements IPaymentService {
             log.error("Number is blank: {}", number);
             throw new IllegalStateException("Number is blank: " + number);
         }
-        return paymentRepository.findFirstByNumberEquals(number);
+        return paymentRepository.findByNumber(number);
     }
 
     @Override
-    public Payment createPayment(Payment payment) {
+    public Payment createPayment(PaymentDto paymentDto) {
+        var payment = paymentMapper.toEntity(paymentDto);
         if (findByNumber(payment.getNumber()).isPresent()) {
             log.error("Payment already exists. Can’t create new {} with same number: {}", paymentId(payment.getId()), payment.getNumber());
             throw new ResourceAlreadyExistException("Payment already exists. Can’t create new Payment with same number: " + payment.getNumber());

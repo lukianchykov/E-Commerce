@@ -3,12 +3,10 @@ package com.gbsfo.ecommerce.service.impl;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
-import javax.validation.ValidationException;
 
 import com.gbsfo.ecommerce.controller.exception.ResourceAlreadyExistException;
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
 import com.gbsfo.ecommerce.domain.Order;
-import com.gbsfo.ecommerce.domain.Order.OrderStatus;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
 import com.gbsfo.ecommerce.mapper.OrderMapper;
@@ -71,11 +69,12 @@ public class OrderService implements IOrderService {
             log.error("Number is blank: {}", number);
             throw new IllegalStateException("Number is blank: " + number);
         }
-        return orderRepository.findFirstByNumberEquals(number);
+        return orderRepository.findByNumber(number);
     }
 
     @Override
-    public Order createOrder(Order order) {
+    public Order createOrder(OrderDto orderDto) {
+        var order = orderMapper.toEntity(orderDto);
         if (findByNumber(order.getNumber()).isPresent()) {
             log.error("Order already exists. Can’t create new {} with same number: {}", orderId(order.getId()), order.getNumber());
             throw new ResourceAlreadyExistException("Order already exists. Can’t create new Order with same number: " + order.getNumber());
@@ -94,15 +93,18 @@ public class OrderService implements IOrderService {
             .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: ", orderId));
         var orderFromRequest = orderMapper.toEntity(orderRequest);
 
-        validateOrderCanBeUpdated(orderInDatabase, orderFromRequest.getOrderStatus());
+        if (!orderFromRequest.canUpdate(orderInDatabase)) {
+            log.error("Order can’t be updated. {} ", orderId(orderId));
+            throw new IllegalStateException("Order can’t be updated. " + orderId(orderId));
+        }
 
-        log.info("Updating order in database, source = {}, target = {}", orderInDatabase, orderFromRequest);
-        BeanUtils.copyProperties(orderInDatabase, orderFromRequest, "id", "total_items", "total_payments");
+        log.info("Updating order in database, source = {}, target = {}", orderFromRequest, orderInDatabase);
+        BeanUtils.copyProperties(orderFromRequest, orderInDatabase, "id", "total_items", "total_payments");
 
-        orderFromRequest.getTotal_items().forEach(item -> item.setOrder(orderFromRequest));
-        orderFromRequest.getTotal_payments().forEach(payment -> payment.setOrder(orderFromRequest));
+        orderInDatabase.getTotal_items().forEach(item -> item.setOrder(orderInDatabase));
+        orderInDatabase.getTotal_payments().forEach(payment -> payment.setOrder(orderInDatabase));
 
-        return orderRepository.save(orderFromRequest);
+        return orderRepository.save(orderInDatabase);
     }
 
     @Override
@@ -111,35 +113,10 @@ public class OrderService implements IOrderService {
         var order = orderRepository.findById(orderId)
             .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: ", orderId));
 
-        validateOrderCanBeDeleted(order);
+        if (!order.canDelete(order)) {
+            log.error("Order can’t be deleted. {} ", orderId(orderId));
+            throw new IllegalStateException("Order can’t be deleted. " + orderId(orderId));
+        }
         orderRepository.deleteById(order.getId());
-    }
-
-    private void validateOrderCanBeDeleted(Order order) {
-        if (order.getOrderStatus() == OrderStatus.SHIPPING || order.getOrderStatus() == OrderStatus.DELIVERED) {
-            log.error("Cannot delete {} with SHIPPING or DELIVERED status", orderId(order.getId()));
-            throw new ValidationException("Cannot delete order with SHIPPING or DELIVERED status");
-        }
-    }
-
-    private void validateOrderCanBeUpdated(Order order, OrderStatus newStatus) {
-        var currentStatus = order.getOrderStatus();
-
-        if ((newStatus == OrderStatus.SHIPPING || newStatus == OrderStatus.DELIVERED) && !order.allItemsPaid()) {
-            log.error("Order with {} items are not fully paid", orderId(order.getId()));
-            throw new ValidationException("Order items are not fully paid");
-        }
-
-        if ((currentStatus == OrderStatus.SHIPPING || currentStatus == OrderStatus.DELIVERED) && newStatus != currentStatus) {
-            log.error("Cannot update order with {} status", orderId(order.getId()));
-            throw new ValidationException("Cannot update order with SHIPPING or DELIVERED status");
-        }
-
-        if ((currentStatus == OrderStatus.CREATED && newStatus != OrderStatus.PROCESSING)
-            || (currentStatus == OrderStatus.PROCESSING && newStatus != OrderStatus.SHIPPING
-            && newStatus != OrderStatus.DELIVERED)) {
-            log.error("Invalid {} status transition", orderId(order.getId()));
-            throw new ValidationException("Invalid order status transition");
-        }
     }
 }

@@ -1,13 +1,11 @@
 package com.gbsfo.ecommerce.mapper;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.domain.Payment;
 import com.gbsfo.ecommerce.dto.PaymentDto;
+import com.gbsfo.ecommerce.utils.time.TimeUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,11 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
-@Import(PaymentMapperImpl.class)
+@Import({TimeUtils.class, PaymentMapperImpl.class})
 public class PaymentMapperTest {
 
     @Autowired
     private PaymentMapper paymentMapper;
+
+    @Autowired
+    private TimeUtils timeUtils;
 
     private Payment payment;
 
@@ -32,18 +33,16 @@ public class PaymentMapperTest {
 
     @Before
     public void setUp() {
-        Instant creationDate = LocalDateTime.of(2022, 3, 27, 14, 30).toInstant(ZoneOffset.UTC);
-
         payment = new Payment();
         payment.setId(1L);
         payment.setSum(BigDecimal.valueOf(100.0));
-        payment.setPaymentDateTime(creationDate);
+        payment.setPaymentDateTime(timeUtils.getCurrentTime());
         payment.setOrder(new Order());
 
         paymentDto = PaymentDto.builder()
             .id(1L)
             .sum(BigDecimal.valueOf(100.0))
-            .paymentDateTime(creationDate)
+            .paymentDateTime(timeUtils.getCurrentTime())
             .build();
     }
 

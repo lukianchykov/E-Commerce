@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long>, QueryByExampleExecutor<Payment>, JpaSpecificationExecutor<Payment> {
 
-    Optional<Payment> findFirstByNumberEquals(String number);
+    Optional<Payment> findByNumber(String number);
 
 }

@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -25,7 +27,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @RequiredArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "payment")
+@Table(name = "payments")
 public class Payment extends IdentifiableEntity implements Serializable {
 
     private static final long serialVersionUID = -2543425088717298237L;
@@ -43,8 +45,8 @@ public class Payment extends IdentifiableEntity implements Serializable {
     @CreationTimestamp
     private Instant paymentDateTime;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
     @ToString.Exclude
     private Order order;
 }
