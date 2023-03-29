@@ -29,17 +29,8 @@ public class ItemMapperTest {
 
     @Before
     public void setUp() {
-        item = new Item();
-        item.setId(1L);
-        item.setPrice(BigDecimal.valueOf(100.0));
-        item.setName("Item 1");
-        item.setOrder(new Order());
-
-        itemDto = ItemDto.builder()
-            .id(1L)
-            .name("Item 1")
-            .price(BigDecimal.valueOf(100.0))
-            .build();
+        item = Item.builder().id(1L).name("Item 1").price(BigDecimal.valueOf(100.0)).order(new Order()).build();
+        itemDto = ItemDto.builder().id(1L).name("Item 1").price(BigDecimal.valueOf(100.0)).build();
     }
 
     @Test

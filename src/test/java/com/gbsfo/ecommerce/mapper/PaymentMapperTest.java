@@ -33,16 +33,9 @@ public class PaymentMapperTest {
 
     @Before
     public void setUp() {
-        payment = new Payment();
-        payment.setId(1L);
-        payment.setSum(BigDecimal.valueOf(100.0));
-        payment.setPaymentDateTime(timeUtils.getCurrentTime());
-        payment.setOrder(new Order());
-
-        paymentDto = PaymentDto.builder()
-            .id(1L)
-            .sum(BigDecimal.valueOf(100.0))
-            .paymentDateTime(timeUtils.getCurrentTime())
+        payment = Payment.builder().id(1L).number("PAYMENT-12345").sum(BigDecimal.valueOf(100.0)).paymentDateTime(timeUtils.getCurrentTime())
+            .order(new Order()).build();
+        paymentDto = PaymentDto.builder().id(1L).number("PAYMENT-12345").sum(BigDecimal.valueOf(100.0)).paymentDateTime(timeUtils.getCurrentTime())
             .build();
     }
 

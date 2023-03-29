@@ -16,7 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 @Slf4j
 public class OrderSearchSpecifications {
 
-    public static Specification<Order> idEquals(String id) {
+    public static Specification<Order> idEquals(Long id) {
         return (root, query, criteriaBuilder) ->
             Optional.ofNullable(id)
                 .map(val -> criteriaBuilder.equal(root.get(Order_.ID), val))

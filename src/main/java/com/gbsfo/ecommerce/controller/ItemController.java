@@ -37,7 +37,7 @@ import static com.gbsfo.ecommerce.utils.Constants.API_VERSION_PREFIX_V1;
 @ApiResponses(value = {
     @ApiResponse(code = 400, message = "This is a bad request, please follow the API documentation for the proper request format"),
     @ApiResponse(code = 401, message = "Due to security constraints, your access request cannot be authorized"),
-    @ApiResponse(code = 500, message = "The server is down. Please bear with us."),
+    @ApiResponse(code = 500, message = "The server is down. Please be with us."),
 })
 public class ItemController {
 
@@ -62,7 +62,7 @@ public class ItemController {
         return ResponseEntity.ok(itemFacade.getItemById(itemId));
     }
 
-    @GetMapping("/by-number/{name}")
+    @GetMapping("/by-name/{name}")
     @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public ResponseEntity<ItemDto> findByName(@PathVariable String name) {
         return ResponseEntity.ok(itemFacade.findByName(name));

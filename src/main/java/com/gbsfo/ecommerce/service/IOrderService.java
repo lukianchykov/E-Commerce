@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.dto.ItemDto;
-import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
+import com.gbsfo.ecommerce.dto.OrderUpsertRequest;
 
 import org.springframework.data.domain.Page;
 
@@ -20,9 +20,9 @@ public interface IOrderService {
 
     Order addItemsInOrder(Long orderId, List<ItemDto> items);
 
-    Order createOrder(OrderDto order);
+    Order createOrder(OrderUpsertRequest orderUpsertRequest);
 
-    Order updateOrder(Long orderId, OrderDto order);
+    Order updateOrder(Long orderId, OrderUpsertRequest orderUpsertRequest);
 
     void deleteOrder(Long orderId);
 }

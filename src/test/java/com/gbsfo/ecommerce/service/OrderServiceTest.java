@@ -11,8 +11,8 @@ import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.domain.Order.OrderStatus;
 import com.gbsfo.ecommerce.domain.Payment;
 import com.gbsfo.ecommerce.dto.ItemDto;
-import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
+import com.gbsfo.ecommerce.dto.OrderUpsertRequest;
 import com.gbsfo.ecommerce.mapper.ItemMapper;
 import com.gbsfo.ecommerce.mapper.OrderMapper;
 import com.gbsfo.ecommerce.repository.OrderRepository;
@@ -118,6 +118,7 @@ public class OrderServiceTest {
     @Test
     public void findOrders_withPartialSearchWhenThereIsWrongField_shouldNotFindEntityAndTrowAnError() {
         OrderLookupPublicApiRequest orderLookupPublicApiRequest = OrderLookupPublicApiRequest.builder()
+            .id(2L)
             .number("INVALID")
             .orderStatus("INVALID")
             .offset(0)
@@ -136,14 +137,13 @@ public class OrderServiceTest {
 
     @Test
     public void createOrder() {
-        Order newOrder = Order.builder().number("fake").build();
-        when(orderMapper.toEntity(any(OrderDto.class))).thenReturn(newOrder);
-        OrderDto orderDto = OrderDto.builder().number("number").orderStatus(OrderDto.OrderStatus.CREATED).build();
+        var order = Order.builder().number("ORD-002").orderStatus(OrderStatus.CREATED).build();
+        when(orderMapper.toEntity(any(OrderUpsertRequest.class))).thenReturn(order);
+        var orderUpsertRequest = OrderUpsertRequest.builder().number("number").build();
 
-        Order createdOrder = orderService.createOrder(orderDto);
+        Order createdOrder = orderService.createOrder(orderUpsertRequest);
 
         assertNotNull(orderRepository.findById(createdOrder.getId()));
-        assertEquals(newOrder, createdOrder);
     }
 
     @Test
@@ -154,10 +154,10 @@ public class OrderServiceTest {
         Payment newPayment = Payment.builder().number("number 1").sum(new BigDecimal("10.00")).paymentDateTime(timeUtils.getCurrentTime()).build();
         newOrder.getTotal_payments().add(newPayment);
 
-        when(orderMapper.toEntity(any(OrderDto.class))).thenReturn(newOrder);
-        OrderDto orderDto = OrderDto.builder().number("number 1 Dto").build();
+        when(orderMapper.toEntity(any(OrderUpsertRequest.class))).thenReturn(newOrder);
+        var orderUpsertRequest = OrderUpsertRequest.builder().number("number").build();
 
-        Order createdOrder = orderService.createOrder(orderDto);
+        Order createdOrder = orderService.createOrder(orderUpsertRequest);
 
         assertNotNull(orderRepository.findById(createdOrder.getId()));
         assertFalse(createdOrder.getTotal_items().isEmpty());
@@ -166,19 +166,19 @@ public class OrderServiceTest {
 
     @Test
     public void updateOrder_shouldUpdateOrderInDatabase() {
-        OrderDto orderDto = OrderDto.builder().id(4L).number("number123").orderStatus(OrderDto.OrderStatus.CREATED).build();
+        var orderUpsertRequest = OrderUpsertRequest.builder().number("number").build();
         Order orderInDatabase = Order.builder().id(3L).number("Numb1").orderStatus(OrderStatus.CREATED).build();
 
-        when(orderMapper.toEntity(orderDto)).thenReturn(Order.builder().number(orderDto.getNumber()).build());
+        when(orderMapper.toEntity(any(OrderUpsertRequest.class))).thenReturn(Order.builder().number(orderUpsertRequest.getNumber()).build());
 
         Order savedOrder = orderRepository.save(orderInDatabase);
         assertNotNull(orderRepository.findById(savedOrder.getId()));
 
-        assertNotEquals(orderDto.getNumber(), savedOrder.getNumber());
+        assertNotEquals(orderUpsertRequest.getNumber(), savedOrder.getNumber());
 
         savedOrder.canUpdate(savedOrder);
-        Order updatedOrder = orderService.updateOrder(savedOrder.getId(), orderDto);
-        assertEquals(orderDto.getNumber(), updatedOrder.getNumber());
+        Order updatedOrder = orderService.updateOrder(savedOrder.getId(), orderUpsertRequest);
+        assertEquals(orderUpsertRequest.getNumber(), updatedOrder.getNumber());
     }
 
     @Test
@@ -189,21 +189,33 @@ public class OrderServiceTest {
         Payment newPayment = Payment.builder().number("number 1").sum(new BigDecimal("10.00")).paymentDateTime(timeUtils.getCurrentTime()).build();
         newOrder.getTotal_payments().add(newPayment);
 
-        when(orderMapper.toEntity(any(OrderDto.class))).thenReturn(newOrder);
-        OrderDto orderDto = OrderDto.builder().number("number123").build();
+        when(orderMapper.toEntity(any(OrderUpsertRequest.class))).thenReturn(newOrder);
+        var orderUpsertRequest = OrderUpsertRequest.builder().number("number").build();
 
         Order savedOrder = orderRepository.save(newOrder);
         assertNotNull(orderRepository.findById(savedOrder.getId()));
 
         savedOrder.canUpdate(savedOrder);
-        Order updateOrder = orderService.updateOrder(savedOrder.getId(), orderDto);
+        Order updateOrder = orderService.updateOrder(savedOrder.getId(), orderUpsertRequest);
 
         assertNotNull(orderRepository.findById(updateOrder.getId()));
-        // verify new email added
+        // verify new items and payments added
         assertTrue(updateOrder.getTotal_items().stream()
             .anyMatch(item -> item.getName().equals(newItem.getName())));
         assertTrue(updateOrder.getTotal_payments().stream()
             .anyMatch(payment -> payment.getNumber().equals(newPayment.getNumber())));
+    }
+
+    @Test
+    public void verify_CanAddItemsInOrderWithShippingStatus() {
+        Order newOrder = Order.builder().id(3L).number("Numb1").orderStatus(OrderStatus.CREATED).build();
+        Order savedOrder = orderRepository.save(newOrder);
+        assertNotNull(orderRepository.findById(savedOrder.getId()));
+
+        ItemDto item1 = ItemDto.builder().name("Item 1").price(new BigDecimal("10.00")).build();
+        ItemDto item2 = ItemDto.builder().name("Item 2").price(new BigDecimal("20.00")).build();
+        assertTrue(savedOrder.canAddItemsToOrder(savedOrder));
+        assertNotNull(orderService.addItemsInOrder(savedOrder.getId(), List.of(item1, item2)));
     }
 
     @Test

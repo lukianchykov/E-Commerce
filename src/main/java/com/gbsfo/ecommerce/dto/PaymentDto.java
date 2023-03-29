@@ -5,21 +5,21 @@ import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gbsfo.ecommerce.utils.identifiable.IdentifiableDto;
 import com.gbsfo.ecommerce.utils.jackson.ApiJacksonSettings;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Data
-@SuperBuilder
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @ApiJacksonSettings
-@EqualsAndHashCode(callSuper = true)
-public class PaymentDto extends IdentifiableDto {
+public class PaymentDto {
+
+    @JsonProperty("id")
+    private Long id;
 
     @JsonProperty("number")
     private String number;
@@ -27,7 +27,7 @@ public class PaymentDto extends IdentifiableDto {
     @JsonProperty("sum")
     private BigDecimal sum;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX", timezone = "UTC")
     @JsonProperty("payment_date_time")
     private Instant paymentDateTime;
 }

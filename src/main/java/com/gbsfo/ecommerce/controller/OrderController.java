@@ -8,6 +8,7 @@ import com.gbsfo.ecommerce.dto.ItemDto;
 import com.gbsfo.ecommerce.dto.IterableDataResponse;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
+import com.gbsfo.ecommerce.dto.OrderUpsertRequest;
 import com.gbsfo.ecommerce.facade.OrderFacade;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -37,7 +38,7 @@ import static com.gbsfo.ecommerce.utils.Constants.API_VERSION_PREFIX_V1;
 @ApiResponses(value = {
     @ApiResponse(code = 400, message = "This is a bad request, please follow the API documentation for the proper request format"),
     @ApiResponse(code = 401, message = "Due to security constraints, your access request cannot be authorized"),
-    @ApiResponse(code = 500, message = "The server is down. Please bear with us."),
+    @ApiResponse(code = 500, message = "The server is down. Please be with us."),
 })
 public class OrderController {
 
@@ -70,8 +71,8 @@ public class OrderController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
-    public ResponseEntity<OrderDto> createOrder(@Valid @RequestBody OrderDto order) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderFacade.createOrder(order));
+    public ResponseEntity<OrderDto> createOrder(@Valid @RequestBody OrderUpsertRequest orderUpsertRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderFacade.createOrder(orderUpsertRequest));
     }
 
     @PostMapping("/{id}/items")
@@ -82,8 +83,8 @@ public class OrderController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
-    public ResponseEntity<OrderDto> updateOrder(@PathVariable(value = "id") Long orderId, @Valid @RequestBody OrderDto order) {
-        return ResponseEntity.ok().body(orderFacade.updateOrder(orderId, order));
+    public ResponseEntity<OrderDto> updateOrder(@PathVariable(value = "id") Long orderId, @Valid @RequestBody OrderUpsertRequest orderUpsertRequest) {
+        return ResponseEntity.ok().body(orderFacade.updateOrder(orderId, orderUpsertRequest));
     }
 
     @DeleteMapping("/{id}")

@@ -19,7 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 @UtilityClass
 public class ItemSearchSpecifications {
 
-    public static Specification<Item> idEquals(String id) {
+    public static Specification<Item> idEquals(Long id) {
         return (root, query, criteriaBuilder) ->
             Optional.ofNullable(id)
                 .map(val -> criteriaBuilder.equal(root.get(Item_.ID), val))

@@ -9,8 +9,8 @@ import com.gbsfo.ecommerce.controller.exception.ResourceAlreadyExistException;
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
 import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.dto.ItemDto;
-import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
+import com.gbsfo.ecommerce.dto.OrderUpsertRequest;
 import com.gbsfo.ecommerce.mapper.ItemMapper;
 import com.gbsfo.ecommerce.mapper.OrderMapper;
 import com.gbsfo.ecommerce.repository.OrderRepository;
@@ -79,8 +79,8 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order createOrder(OrderDto orderDto) {
-        var order = orderMapper.toEntity(orderDto);
+    public Order createOrder(OrderUpsertRequest orderUpsertRequest) {
+        var order = orderMapper.toEntity(orderUpsertRequest);
         if (findByNumber(order.getNumber()).isPresent()) {
             log.error("Order already exists. Can’t create new {} with same number: {}", orderId(order.getId()), order.getNumber());
             throw new ResourceAlreadyExistException("Order already exists. Can’t create new Order with same number: " + order.getNumber());
@@ -112,10 +112,10 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order updateOrder(Long orderId, OrderDto orderRequest) {
+    public Order updateOrder(Long orderId, OrderUpsertRequest orderUpsertRequest) {
         var orderInDatabase = orderRepository.findById(orderId)
             .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: ", orderId));
-        var orderFromRequest = orderMapper.toEntity(orderRequest);
+        var orderFromRequest = orderMapper.toEntity(orderUpsertRequest);
 
         if (!orderFromRequest.canUpdate(orderInDatabase)) {
             log.error("Order can’t be updated. {} ", orderId(orderId));

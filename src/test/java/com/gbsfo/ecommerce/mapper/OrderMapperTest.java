@@ -38,44 +38,17 @@ public class OrderMapperTest {
 
     @Before
     public void setUp() {
-        Item item = new Item();
-        item.setId(1L);
-        item.setPrice(BigDecimal.valueOf(100.0));
-        item.setName("Item 1");
-        item.setOrder(new Order());
+        Item item = Item.builder().id(1L).name("Item 1").price(BigDecimal.valueOf(100.0)).order(new Order()).build();
+        Payment payment = Payment.builder().id(1L).number("PAYMENT-12345").sum(BigDecimal.valueOf(100.0)).paymentDateTime(timeUtils.getCurrentTime())
+            .order(new Order()).build();
+        order = Order.builder().id(1L).number("12345").orderStatus(OrderStatus.CREATED).total_items(Collections.singletonList(item))
+            .total_payments(Collections.singletonList(payment)).build();
 
-        Payment payment = new Payment();
-        payment.setId(1L);
-        payment.setSum(BigDecimal.valueOf(100.0));
-        payment.setPaymentDateTime(timeUtils.getCurrentTime());
-        payment.setOrder(new Order());
-
-        order = new Order();
-        order.setId(1L);
-        order.setNumber("12345");
-        order.setOrderStatus(OrderStatus.CREATED);
-        order.setTotal_items(Collections.singletonList(item));
-        order.setTotal_payments(Collections.singletonList(payment));
-
-        ItemDto itemDto = ItemDto.builder()
-            .id(1L)
-            .name("Item 1")
-            .price(BigDecimal.valueOf(100.0))
-            .build();
-
-        PaymentDto paymentDto = PaymentDto.builder()
-            .id(1L)
-            .sum(BigDecimal.valueOf(100.0))
-            .paymentDateTime(timeUtils.getCurrentTime())
-            .build();
-
-        orderDto = OrderDto.builder()
-            .id(1L)
-            .number("12345")
-            .orderStatus(com.gbsfo.ecommerce.dto.OrderDto.OrderStatus.CREATED)
-            .items(Collections.singletonList(itemDto))
-            .payments(Collections.singletonList(paymentDto))
-            .build();
+        ItemDto itemDto = ItemDto.builder().id(1L).name("Item 1").price(BigDecimal.valueOf(100.0)).build();
+        PaymentDto paymentDto = PaymentDto.builder().id(1L).number("PAYMENT-12345").sum(BigDecimal.valueOf(100.0))
+            .paymentDateTime(timeUtils.getCurrentTime()).build();
+        orderDto = OrderDto.builder().id(1L).number("12345").orderStatus(com.gbsfo.ecommerce.dto.OrderDto.OrderStatus.CREATED)
+            .items(Collections.singletonList(itemDto)).payments(Collections.singletonList(paymentDto)).build();
     }
 
     @Test

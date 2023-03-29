@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class PaymentLookupPublicApiRequest {
 
     @JsonProperty("id")
-    private String id;
+    private Long id;
 
     @JsonProperty("number")
     private String number;

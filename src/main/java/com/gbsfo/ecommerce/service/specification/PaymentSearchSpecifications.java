@@ -19,7 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 @UtilityClass
 public class PaymentSearchSpecifications {
 
-    public static Specification<Payment> idEquals(String id) {
+    public static Specification<Payment> idEquals(Long id) {
         return (root, query, criteriaBuilder) ->
             Optional.ofNullable(id)
                 .map(val -> criteriaBuilder.equal(root.get(Payment_.ID), val))

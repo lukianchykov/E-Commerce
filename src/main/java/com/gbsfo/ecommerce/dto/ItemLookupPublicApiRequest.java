@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class ItemLookupPublicApiRequest {
 
     @JsonProperty("id")
-    private String id;
+    private Long id;
 
     @JsonProperty("name")
     private String name;

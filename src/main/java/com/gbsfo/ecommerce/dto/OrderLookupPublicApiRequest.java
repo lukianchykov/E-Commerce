@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class OrderLookupPublicApiRequest {
 
     @JsonProperty("id")
-    private String id;
+    private Long id;
 
     @JsonProperty("number")
     private String number;

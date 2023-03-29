@@ -37,7 +37,7 @@ import static com.gbsfo.ecommerce.utils.Constants.API_VERSION_PREFIX_V1;
 @ApiResponses(value = {
     @ApiResponse(code = 400, message = "This is a bad request, please follow the API documentation for the proper request format"),
     @ApiResponse(code = 401, message = "Due to security constraints, your access request cannot be authorized"),
-    @ApiResponse(code = 500, message = "The server is down. Please bear with us."),
+    @ApiResponse(code = 500, message = "The server is down. Please be with us."),
 })
 public class PaymentController {
 
@@ -48,7 +48,7 @@ public class PaymentController {
     @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public IterableDataResponse<List<PaymentDto>> searchPayments(
         @RequestParam(value = "number", required = false) String number,
-        @RequestParam(value = "Payment_status", required = false) BigDecimal sum,
+        @RequestParam(value = "sum", required = false) BigDecimal sum,
         @RequestParam(value = API_OFFSET_REQUEST_PARAMETER, required = false, defaultValue = "0") int offset,
         @RequestParam(value = API_LIMIT_REQUEST_PARAMETER, required = false, defaultValue = "20") int limit
     ) {

@@ -1,7 +1,8 @@
 package com.gbsfo.ecommerce.dto;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gbsfo.ecommerce.utils.jackson.ApiJacksonSettings;
@@ -10,29 +11,31 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.gbsfo.ecommerce.utils.Constants.API_VALIDATION_ERROR_MESSAGE_BLANK_STRING;
+
 @Data
 @Builder
 @NoArgsConstructor
 @ApiJacksonSettings
 @AllArgsConstructor
-public class OrderDto {
+public class OrderUpsertRequest {
 
     @JsonProperty("id")
     private Long id;
 
     @JsonProperty("order_number")
+    @NotBlank(message = API_VALIDATION_ERROR_MESSAGE_BLANK_STRING)
     private String number;
 
     @JsonProperty("order_status")
+    @NotBlank(message = API_VALIDATION_ERROR_MESSAGE_BLANK_STRING)
     private OrderStatus orderStatus;
 
     @JsonProperty("items")
-    @Builder.Default
-    private List<ItemDto> items = new ArrayList<>();
+    private List<ItemDto> items;
 
     @JsonProperty("payments")
-    @Builder.Default
-    private List<PaymentDto> payments = new ArrayList<>();
+    private List<PaymentDto> payments;
 
     public enum OrderStatus {
         @JsonProperty("CREATED") CREATED,
@@ -40,4 +43,5 @@ public class OrderDto {
         @JsonProperty("SHIPPING") SHIPPING,
         @JsonProperty("DELIVERED") DELIVERED
     }
+
 }

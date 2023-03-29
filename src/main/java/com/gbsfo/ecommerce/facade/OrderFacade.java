@@ -8,6 +8,7 @@ import com.gbsfo.ecommerce.dto.ItemDto;
 import com.gbsfo.ecommerce.dto.IterableDataResponse;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
+import com.gbsfo.ecommerce.dto.OrderUpsertRequest;
 import com.gbsfo.ecommerce.mapper.OrderMapper;
 import com.gbsfo.ecommerce.service.impl.OrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,8 +46,8 @@ public class OrderFacade {
         return orderMapper.toDto(orderByNumber);
     }
 
-    public OrderDto createOrder(OrderDto orderDto) {
-        var order = orderService.createOrder(orderDto);
+    public OrderDto createOrder(OrderUpsertRequest orderUpsertRequest) {
+        var order = orderService.createOrder(orderUpsertRequest);
         return orderMapper.toDto(order);
     }
 
@@ -55,8 +56,8 @@ public class OrderFacade {
         return orderMapper.toDto(order);
     }
 
-    public OrderDto updateOrder(Long orderId, OrderDto orderDto) {
-        var order = orderService.updateOrder(orderId, orderDto);
+    public OrderDto updateOrder(Long orderId, OrderUpsertRequest orderUpsertRequest) {
+        var order = orderService.updateOrder(orderId, orderUpsertRequest);
         return orderMapper.toDto(order);
     }
 
