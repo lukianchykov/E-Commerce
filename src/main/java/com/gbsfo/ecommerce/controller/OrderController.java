@@ -9,11 +9,14 @@ import com.gbsfo.ecommerce.dto.IterableDataResponse;
 import com.gbsfo.ecommerce.dto.OrderDto;
 import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
 import com.gbsfo.ecommerce.facade.OrderFacade;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,12 +34,18 @@ import static com.gbsfo.ecommerce.utils.Constants.API_VERSION_PREFIX_V1;
 @Slf4j
 @RestController
 @RequestMapping(API_VERSION_PREFIX_V1 + "/orders")
+@ApiResponses(value = {
+    @ApiResponse(code = 400, message = "This is a bad request, please follow the API documentation for the proper request format"),
+    @ApiResponse(code = 401, message = "Due to security constraints, your access request cannot be authorized"),
+    @ApiResponse(code = 500, message = "The server is down. Please bear with us."),
+})
 public class OrderController {
 
     @Autowired
     private OrderFacade orderFacade;
 
     @GetMapping
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public IterableDataResponse<List<OrderDto>> searchOrders(
         @RequestParam(value = "number", required = false) String number,
         @RequestParam(value = "order_status", required = false) String orderStatus,
@@ -48,31 +57,37 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public ResponseEntity<OrderDto> getOrderById(@PathVariable(value = "id") Long orderId) {
         return ResponseEntity.ok(orderFacade.getOrderById(orderId));
     }
 
     @GetMapping("/by-number/{number}")
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public ResponseEntity<OrderDto> findByNumber(@PathVariable String number) {
         return ResponseEntity.ok(orderFacade.findByNumber(number));
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public ResponseEntity<OrderDto> createOrder(@Valid @RequestBody OrderDto order) {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderFacade.createOrder(order));
     }
 
     @PostMapping("/{id}/items")
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public ResponseEntity<OrderDto> addItemsToOrder(@PathVariable(value = "id") Long orderId, @Valid @RequestBody List<ItemDto> items) {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderFacade.addItemsToOrder(orderId, items));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public ResponseEntity<OrderDto> updateOrder(@PathVariable(value = "id") Long orderId, @Valid @RequestBody OrderDto order) {
         return ResponseEntity.ok().body(orderFacade.updateOrder(orderId, order));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public ResponseEntity<?> deleteOrder(@PathVariable(value = "id") Long orderId) {
         orderFacade.deleteOrder(orderId);
         return ResponseEntity.ok().build();
