@@ -41,7 +41,7 @@ public class Payment extends IdentifiableEntity implements Serializable {
     private BigDecimal sum;
 
     @JsonProperty("paymentDateTime")
-    @Column(name = "payment_date_time", nullable = false)
+    @Column(name = "payment_date_time")
     @CreationTimestamp
     private Instant paymentDateTime;
 

@@ -66,11 +66,15 @@ public class OrderServiceTest {
     @Before
     public void setUp() {
 
-        Item item1 = Item.builder().name("Item 1").price(new BigDecimal("10.00")).order(order).build();
-        Item item2 = Item.builder().name("Item 2").price(new BigDecimal("20.00")).order(order).build();
+        Item item1 = Item.builder().name("Item 1").price(new BigDecimal("10.00")).order(
+            Order.builder().number("Number 1").orderStatus(OrderStatus.CREATED).build()).build();
+        Item item2 = Item.builder().name("Item 2").price(new BigDecimal("20.00")).order(
+            Order.builder().number("Number 1").orderStatus(OrderStatus.CREATED).build()).build();
 
-        Payment payment1 = Payment.builder().number("number 1").sum(new BigDecimal("10.00")).paymentDateTime(timeUtils.getCurrentTime()).build();
-        Payment payment2 = Payment.builder().number("number 2").sum(new BigDecimal("20.00")).paymentDateTime(timeUtils.getCurrentTime()).build();
+        Payment payment1 = Payment.builder().number("number 1").sum(new BigDecimal("10.00")).paymentDateTime(timeUtils.getCurrentTime()).order(
+            Order.builder().number("Number 1").orderStatus(OrderStatus.CREATED).build()).build();
+        Payment payment2 = Payment.builder().number("number 2").sum(new BigDecimal("20.00")).paymentDateTime(timeUtils.getCurrentTime()).order(
+            Order.builder().number("Number 1").orderStatus(OrderStatus.CREATED).build()).build();
 
         order = Order.builder().number("ORD-001").orderStatus(OrderStatus.CREATED).total_items(List.of(item1, item2))
             .total_payments(List.of(payment1, payment2)).build();
@@ -148,10 +152,10 @@ public class OrderServiceTest {
 
     @Test
     public void createOrder_whenNoItemsAndPayments_verifyItemsAndPaymentsSavedSuccessfully() {
-        Order newOrder = Order.builder().number("number 1").build();
-        Item newItem = Item.builder().name("Item 1").price(new BigDecimal("10.00")).build();
+        Order newOrder = Order.builder().number("ORD-003").orderStatus(OrderStatus.CREATED).build();
+        Item newItem = Item.builder().name("It 1").price(new BigDecimal("10.00")).order(newOrder).build();
         newOrder.getTotal_items().add(newItem);
-        Payment newPayment = Payment.builder().number("number 1").sum(new BigDecimal("10.00")).paymentDateTime(timeUtils.getCurrentTime()).build();
+        Payment newPayment = Payment.builder().number("Num 1").sum(new BigDecimal("10.00")).paymentDateTime(timeUtils.getCurrentTime()).order(newOrder).build();
         newOrder.getTotal_payments().add(newPayment);
 
         when(orderMapper.toEntity(any(OrderUpsertRequest.class))).thenReturn(newOrder);
