@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  ecommercedb:
+    image: mysql:5.6.41
+    env_file: ./.env
+    environment:
+      MYSQL_DATABASE: $MYSQL_ECOMMERCE_DATABASE
+      MYSQL_USER: $MYSQL_ECOMMERCE_USER
+      MYSQL_PASSWORD: $MYSQL_ECOMMERCE_PASSWORD
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_HOST: $MYSQL_HOST
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+    network_mode: "host"
+  ecommerce:
+    image: adoptopenjdk:11-jre-hotspot
+    build: DockerFile
+    env_file: ./.env
+    depends_on:
+      - ecommercedb
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./logs:/logs

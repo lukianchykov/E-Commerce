@@ -1,0 +1,37 @@
+FROM openjdk:11-jdk
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the Flyway migrations into the container
+COPY src/main/resources/db/migration /app/db/migration
+
+# Copy your application jar file to the container
+COPY ./target/e-commerce-0.0.1-SNAPSHOT.jar app.jar
+
+# Set MySQL and Flyway environment variables
+ENV          MYSQL_ECOMMERCE_DATABASE=$MYSQL_ECOMMERCE_DATABASE \
+             MYSQL_ECOMMERCE_PASSWORD=$MYSQL_ECOMMERCE_PASSWORD \
+             MYSQL_ECOMMERCE_USER=$MYSQL_ECOMMERCE_USER \
+             MYSQL_HOST=$MYSQL_HOST \
+             SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/ecommercedb \
+             SPRING_DATASOURCE_USERNAME=ecommerceuser \
+             SPRING_DATASOURCE_PASSWORD=ecommercepassword \
+             SPRING_FLYWAY_ENABLED=true \
+             SPRING_FLYWAY_LOCATIONS=classpath:db/migration \
+             SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver \
+             SPRING_JPA_SHOW_SQL=true \
+             SPRING_JPA_HIBERNATE_DDL_AUTO=update \
+             SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL57Dialect \
+             SPRING_JPA_HIBERNATE_NAMING_PHYSICAL_STRATEGY=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy \
+             SPRING_JPA_HIBERNATE_NAMING_IMPLICIT_STRATEGY=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy \
+             SPRING_FLYWAY_VALIDATE_ON_MIGRATE=true \
+             SPRING_FLYWAY_BASELINE_ON_MIGRATE=true \
+             SPRING_FLYWAY_URL=jdbc:mysql://localhost:3306/ecommercedb \
+             SPRING_FLYWAY_USER=ecommerceuser \
+             SPRING_FLYWAY_PASSWORD=ecommercepassword \
+             GBFSO_ECOMMERCE_JWTSECRET=ecommerceSecretKey \
+             GBFSO_ECOMMERCE_JWTEXPIRATIONMS=86400000
+
+# Start the application
+CMD ["java", "-jar", "app.jar"]
