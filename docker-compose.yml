@@ -8,9 +8,6 @@ services:
       - .env
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_ECOMMERCE_DATABASE}
-      MYSQL_USER: ${MYSQL_ECOMMERCE_USER}
-      MYSQL_PASSWORD: ${MYSQL_ECOMMERCE_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
