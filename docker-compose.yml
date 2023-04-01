@@ -1,27 +1,35 @@
-version: "3.8"
+version: '3'
 
 services:
-  ecommercedb:
+  mysql:
     image: mysql:5.6.41
-    env_file: ./.env
+    container_name: mysql
+    env_file:
+      - .env
     environment:
-      MYSQL_DATABASE: $MYSQL_ECOMMERCE_DATABASE
-      MYSQL_USER: $MYSQL_ECOMMERCE_USER
-      MYSQL_PASSWORD: $MYSQL_ECOMMERCE_PASSWORD
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_HOST: $MYSQL_HOST
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_ECOMMERCE_DATABASE}
+      MYSQL_USER: ${MYSQL_ECOMMERCE_USER}
+      MYSQL_PASSWORD: ${MYSQL_ECOMMERCE_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
-      - ./data:/var/lib/mysql
-    network_mode: "host"
+      - "./src/main/resources/db:/docker-entrypoint-initdb.d"
+      - mysqldata:/var/lib/mysql
   ecommerce:
-    image: adoptopenjdk:11-jre-hotspot
-    build: DockerFile
-    env_file: ./.env
+    container_name: ecommerce
+    build:
+      dockerfile: Dockerfile
+    env_file:
+      - .env
     depends_on:
-      - ecommercedb
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_ECOMMERCE_DATABASE: ${MYSQL_ECOMMERCE_DATABASE}
+      MYSQL_ECOMMERCE_USER: ${MYSQL_ECOMMERCE_USER}
+      MYSQL_ECOMMERCE_PASSWORD: ${MYSQL_ECOMMERCE_PASSWORD}
     ports:
       - "8080:8080"
-    volumes:
-      - ./logs:/logs
+volumes:
+  mysqldata:
