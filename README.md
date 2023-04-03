@@ -8,7 +8,6 @@
 - <b> MySQL</b>
 - <b> Flyway</b>
 - <b> Docker</b>
-- <b> Kafka</b>
 
 ## Development environments
 Before starting an app or tests check environment variables must be set in `.env` file. Example:
