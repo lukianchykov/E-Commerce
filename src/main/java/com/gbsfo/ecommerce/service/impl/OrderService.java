@@ -9,7 +9,6 @@ import com.gbsfo.ecommerce.controller.exception.ResourceAlreadyExistException;
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
 import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.dto.ItemDto;
-import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
 import com.gbsfo.ecommerce.dto.OrderUpsertRequest;
 import com.gbsfo.ecommerce.mapper.ItemMapper;
 import com.gbsfo.ecommerce.mapper.OrderMapper;
@@ -20,14 +19,8 @@ import net.logstash.logback.util.StringUtils;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import static com.gbsfo.ecommerce.service.specification.OrderSearchSpecifications.idEquals;
-import static com.gbsfo.ecommerce.service.specification.OrderSearchSpecifications.numberEquals;
-import static com.gbsfo.ecommerce.service.specification.OrderSearchSpecifications.orderStatusEquals;
 import static com.gbsfo.ecommerce.utils.LogStructuredArguments.orderId;
 
 @Service
@@ -44,23 +37,23 @@ public class OrderService implements IOrderService {
     @Autowired
     private ItemMapper itemMapper;
 
-    /**
-     * Public API find orders request
-     * Example:
-     * total: 100
-     * offset: 50, limit: 10
-     * pages to skip = 5
-     * 50 / 10 = offset / limit = 5
-     */
-    @Override
-    public Page<Order> findOrders(OrderLookupPublicApiRequest request) {
-        Specification<Order> searchSpecification = Specification
-            .where(idEquals(request.getId()))
-            .and(numberEquals(request.getNumber()))
-            .and(orderStatusEquals(request.getOrderStatus()));
-
-        return orderRepository.findAll(searchSpecification, PageRequest.of(request.getOffset() / request.getLimit(), request.getLimit()));
-    }
+//    /**
+//     * Public API find orders request
+//     * Example:
+//     * total: 100
+//     * offset: 50, limit: 10
+//     * pages to skip = 5
+//     * 50 / 10 = offset / limit = 5
+//     */
+//    @Override
+//    public Page<Order> findOrders(OrderLookupPublicApiRequest request) {
+//        Specification<Order> searchSpecification = Specification
+//            .where(idEquals(request.getId()))
+//            .and(numberEquals(request.getNumber()))
+//            .and(orderStatusEquals(request.getOrderStatus()));
+//
+//        return orderRepository.findAll(searchSpecification, PageRequest.of(request.getOffset() / request.getLimit(), request.getLimit()));
+//    }
 
     @Override
     public Order getOrderById(Long orderId) {

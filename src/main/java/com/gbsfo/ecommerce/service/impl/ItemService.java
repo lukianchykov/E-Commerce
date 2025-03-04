@@ -8,7 +8,6 @@ import com.gbsfo.ecommerce.controller.exception.ResourceAlreadyExistException;
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
 import com.gbsfo.ecommerce.domain.Item;
 import com.gbsfo.ecommerce.dto.ItemDto;
-import com.gbsfo.ecommerce.dto.ItemLookupPublicApiRequest;
 import com.gbsfo.ecommerce.mapper.ItemMapper;
 import com.gbsfo.ecommerce.repository.ItemRepository;
 import com.gbsfo.ecommerce.service.IItemService;
@@ -17,14 +16,8 @@ import net.logstash.logback.util.StringUtils;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import static com.gbsfo.ecommerce.service.specification.ItemSearchSpecifications.idEquals;
-import static com.gbsfo.ecommerce.service.specification.ItemSearchSpecifications.nameEquals;
-import static com.gbsfo.ecommerce.service.specification.ItemSearchSpecifications.priceEquals;
 import static com.gbsfo.ecommerce.utils.LogStructuredArguments.itemId;
 
 @Service
@@ -38,23 +31,23 @@ public class ItemService implements IItemService {
     @Autowired
     private ItemMapper itemMapper;
 
-    /**
-     * Public API find items request
-     * Example:
-     * total: 100
-     * offset: 50, limit: 10
-     * pages to skip = 5
-     * 50 / 10 = offset / limit = 5
-     */
-    @Override
-    public Page<Item> findItems(ItemLookupPublicApiRequest request) {
-        Specification<Item> searchSpecification = Specification
-            .where(idEquals(request.getId()))
-            .and(nameEquals(request.getName()))
-            .and(priceEquals(request.getPrice()));
-
-        return itemRepository.findAll(searchSpecification, PageRequest.of(request.getOffset() / request.getLimit(), request.getLimit()));
-    }
+//    /**
+//     * Public API find items request
+//     * Example:
+//     * total: 100
+//     * offset: 50, limit: 10
+//     * pages to skip = 5
+//     * 50 / 10 = offset / limit = 5
+//     */
+//    @Override
+//    public Page<Item> findItems(ItemLookupPublicApiRequest request) {
+//        Specification<Item> searchSpecification = Specification
+//            .where(idEquals(request.getId()))
+//            .and(nameEquals(request.getName()))
+//            .and(priceEquals(request.getPrice()));
+//
+//        return itemRepository.findAll(searchSpecification, PageRequest.of(request.getOffset() / request.getLimit(), request.getLimit()));
+//    }
 
     @Override
     public Item getItemById(Long itemId) {

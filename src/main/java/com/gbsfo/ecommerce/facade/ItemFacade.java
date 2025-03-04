@@ -1,12 +1,7 @@
 package com.gbsfo.ecommerce.facade;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
 import com.gbsfo.ecommerce.dto.ItemDto;
-import com.gbsfo.ecommerce.dto.ItemLookupPublicApiRequest;
-import com.gbsfo.ecommerce.dto.IterableDataResponse;
 import com.gbsfo.ecommerce.mapper.ItemMapper;
 import com.gbsfo.ecommerce.service.impl.ItemService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +19,14 @@ public class ItemFacade {
     @Autowired
     private ItemMapper itemMapper;
 
-    public IterableDataResponse<List<ItemDto>> find(ItemLookupPublicApiRequest itemLookupRequest) {
-        var page = itemService.findItems(itemLookupRequest);
-
-        var items = page.getContent().stream()
-            .map(itemMapper::toDto)
-            .collect(Collectors.toList());
-        return new IterableDataResponse<>(items, page.hasNext());
-    }
+//    public IterableDataResponse<List<ItemDto>> find(ItemLookupPublicApiRequest itemLookupRequest) {
+//        var page = itemService.findItems(itemLookupRequest);
+//
+//        var items = page.getContent().stream()
+//            .map(itemMapper::toDto)
+//            .collect(Collectors.toList());
+//        return new IterableDataResponse<>(items, page.hasNext());
+//    }
 
     public ItemDto getItemById(Long itemId) {
         var item = itemService.getItemById(itemId);

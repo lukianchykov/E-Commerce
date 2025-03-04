@@ -5,16 +5,13 @@ import java.util.Optional;
 
 import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.dto.ItemDto;
-import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
 import com.gbsfo.ecommerce.dto.OrderUpsertRequest;
-
-import org.springframework.data.domain.Page;
 
 public interface IOrderService {
 
     Order getOrderById(Long orderId);
 
-    Page<Order> findOrders(OrderLookupPublicApiRequest request);
+//    Page<Order> findOrders(OrderLookupPublicApiRequest request);
 
     Optional<Order> findByNumber(String number);
 

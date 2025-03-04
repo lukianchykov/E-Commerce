@@ -1,12 +1,7 @@
 package com.gbsfo.ecommerce.facade;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
-import com.gbsfo.ecommerce.dto.IterableDataResponse;
 import com.gbsfo.ecommerce.dto.PaymentDto;
-import com.gbsfo.ecommerce.dto.PaymentLookupPublicApiRequest;
 import com.gbsfo.ecommerce.mapper.PaymentMapper;
 import com.gbsfo.ecommerce.service.impl.PaymentService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +19,14 @@ public class PaymentFacade {
     @Autowired
     private PaymentMapper paymentMapper;
 
-    public IterableDataResponse<List<PaymentDto>> find(PaymentLookupPublicApiRequest paymetLookupRequest) {
-        var page = paymentService.findPayments(paymetLookupRequest);
-
-        var payments = page.getContent().stream()
-            .map(paymentMapper::toDto)
-            .collect(Collectors.toList());
-        return new IterableDataResponse<>(payments, page.hasNext());
-    }
+//    public IterableDataResponse<List<PaymentDto>> find(PaymentLookupPublicApiRequest paymetLookupRequest) {
+//        var page = paymentService.findPayments(paymetLookupRequest);
+//
+//        var payments = page.getContent().stream()
+//            .map(paymentMapper::toDto)
+//            .collect(Collectors.toList());
+//        return new IterableDataResponse<>(payments, page.hasNext());
+//    }
 
     public PaymentDto getPaymentById(Long paymentId) {
         var payment = paymentService.getPaymentById(paymentId);
