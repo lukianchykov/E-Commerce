@@ -1,12 +1,9 @@
 package com.gbsfo.ecommerce.facade;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.gbsfo.ecommerce.domain.Payment;
-import com.gbsfo.ecommerce.dto.IterableDataResponse;
 import com.gbsfo.ecommerce.dto.PaymentDto;
-import com.gbsfo.ecommerce.dto.PaymentLookupPublicApiRequest;
 import com.gbsfo.ecommerce.mapper.PaymentMapper;
 import com.gbsfo.ecommerce.service.impl.PaymentService;
 import org.junit.Test;
@@ -15,11 +12,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;

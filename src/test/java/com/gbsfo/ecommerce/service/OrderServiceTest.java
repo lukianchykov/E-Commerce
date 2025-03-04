@@ -4,14 +4,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.ValidationException;
-
 import com.gbsfo.ecommerce.domain.Item;
 import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.domain.Order.OrderStatus;
 import com.gbsfo.ecommerce.domain.Payment;
 import com.gbsfo.ecommerce.dto.ItemDto;
-import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
 import com.gbsfo.ecommerce.dto.OrderUpsertRequest;
 import com.gbsfo.ecommerce.mapper.ItemMapper;
 import com.gbsfo.ecommerce.mapper.OrderMapper;
@@ -28,7 +25,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

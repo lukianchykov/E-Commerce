@@ -7,7 +7,6 @@ import com.gbsfo.ecommerce.domain.Item;
 import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.domain.Order.OrderStatus;
 import com.gbsfo.ecommerce.dto.ItemDto;
-import com.gbsfo.ecommerce.dto.ItemLookupPublicApiRequest;
 import com.gbsfo.ecommerce.mapper.ItemMapper;
 import com.gbsfo.ecommerce.repository.ItemRepository;
 import com.gbsfo.ecommerce.service.impl.ItemService;
@@ -21,13 +20,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

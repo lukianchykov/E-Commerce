@@ -7,7 +7,6 @@ import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.domain.Order.OrderStatus;
 import com.gbsfo.ecommerce.domain.Payment;
 import com.gbsfo.ecommerce.dto.PaymentDto;
-import com.gbsfo.ecommerce.dto.PaymentLookupPublicApiRequest;
 import com.gbsfo.ecommerce.mapper.PaymentMapper;
 import com.gbsfo.ecommerce.repository.PaymentRepository;
 import com.gbsfo.ecommerce.service.impl.PaymentService;
@@ -22,13 +21,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

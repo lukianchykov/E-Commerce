@@ -5,9 +5,7 @@ import java.util.Optional;
 
 import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.dto.ItemDto;
-import com.gbsfo.ecommerce.dto.IterableDataResponse;
 import com.gbsfo.ecommerce.dto.OrderDto;
-import com.gbsfo.ecommerce.dto.OrderLookupPublicApiRequest;
 import com.gbsfo.ecommerce.dto.OrderUpsertRequest;
 import com.gbsfo.ecommerce.mapper.OrderMapper;
 import com.gbsfo.ecommerce.service.impl.OrderService;
@@ -17,11 +15,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
