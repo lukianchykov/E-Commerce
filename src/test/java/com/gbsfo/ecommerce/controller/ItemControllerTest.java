@@ -44,7 +44,6 @@ import static org.mockito.Mockito.verify;
 
 @WebFluxTest(controllers = ItemController.class)
 @Import(WebFluxSecurityConfig.class)
-
 public class ItemControllerTest {
 
     private static final Long ITEM_ID = 1L;
