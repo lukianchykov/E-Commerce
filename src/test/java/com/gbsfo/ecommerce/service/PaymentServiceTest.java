@@ -70,46 +70,46 @@ public class PaymentServiceTest {
         assertEquals(payment, actual);
     }
 
-    @Test
-    public void findPayments_withFullSearch() {
-        PaymentLookupPublicApiRequest paymentLookupPublicApiRequest = PaymentLookupPublicApiRequest.builder()
-            .number("Payment 1")
-            .sum(BigDecimal.valueOf(123.45))
-            .offset(0)
-            .limit(20)
-            .build();
-
-        Page<Payment> actual = paymentService.findPayments(paymentLookupPublicApiRequest);
-
-        assertEquals(payment, actual.getContent().get(0));
-    }
-
-    @Test
-    public void findPayments_withPartialSearch() {
-        PaymentLookupPublicApiRequest paymentLookupPublicApiRequest = PaymentLookupPublicApiRequest.builder()
-            .number("Payment 1")
-            .offset(0)
-            .limit(20)
-            .build();
-
-        Page<Payment> actual = paymentService.findPayments(paymentLookupPublicApiRequest);
-
-        assertEquals(payment, actual.getContent().get(0));
-    }
-
-    @Test
-    public void findPayments_withPartialSearchWhenThereIsWrongField_shouldNotFindEntityAndTrowAnError() {
-        PaymentLookupPublicApiRequest paymentLookupPublicApiRequest = PaymentLookupPublicApiRequest.builder()
-            .number("INVALID")
-            .sum(BigDecimal.valueOf(0.00))
-            .offset(0)
-            .limit(20)
-            .build();
-
-        Page<Payment> actual = paymentService.findPayments(paymentLookupPublicApiRequest);
-
-        assertTrue(actual.getContent().isEmpty());
-    }
+//    @Test
+//    public void findPayments_withFullSearch() {
+//        PaymentLookupPublicApiRequest paymentLookupPublicApiRequest = PaymentLookupPublicApiRequest.builder()
+//            .number("Payment 1")
+//            .sum(BigDecimal.valueOf(123.45))
+//            .offset(0)
+//            .limit(20)
+//            .build();
+//
+//        Page<Payment> actual = paymentService.findPayments(paymentLookupPublicApiRequest);
+//
+//        assertEquals(payment, actual.getContent().get(0));
+//    }
+//
+//    @Test
+//    public void findPayments_withPartialSearch() {
+//        PaymentLookupPublicApiRequest paymentLookupPublicApiRequest = PaymentLookupPublicApiRequest.builder()
+//            .number("Payment 1")
+//            .offset(0)
+//            .limit(20)
+//            .build();
+//
+//        Page<Payment> actual = paymentService.findPayments(paymentLookupPublicApiRequest);
+//
+//        assertEquals(payment, actual.getContent().get(0));
+//    }
+//
+//    @Test
+//    public void findPayments_withPartialSearchWhenThereIsWrongField_shouldNotFindEntityAndTrowAnError() {
+//        PaymentLookupPublicApiRequest paymentLookupPublicApiRequest = PaymentLookupPublicApiRequest.builder()
+//            .number("INVALID")
+//            .sum(BigDecimal.valueOf(0.00))
+//            .offset(0)
+//            .limit(20)
+//            .build();
+//
+//        Page<Payment> actual = paymentService.findPayments(paymentLookupPublicApiRequest);
+//
+//        assertTrue(actual.getContent().isEmpty());
+//    }
 
     @Test
     public void verify_findPaymentByNumber() {

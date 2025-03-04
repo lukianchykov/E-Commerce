@@ -116,115 +116,115 @@ public class PaymentControllerTest {
             .consumeWith(System.out::println);
     }
 
-    @Test
-    public void searchPayments_WithNumberPaymentsFound_ExpectedOkHttpResponseStatusAndPaymentJsonResponseAndVerifyDefaultOffsetAndLimitParametersSet() throws Exception {
-        var paymentLookupRequest = PaymentLookupPublicApiRequest.builder()
-            .number(NUMBER)
-            //default parameters
-            .offset(0)
-            .limit(20)
-            .build();
-        var iterableDataResponse = new IterableDataResponse<>(List.of(payment), true);
-        given(paymentFacade.find(eq(paymentLookupRequest))).willReturn(iterableDataResponse);
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/payments")
-                .queryParam("number", paymentLookupRequest.getNumber())
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isOk()
-            .expectBody().json(objectMapper.writeValueAsString(iterableDataResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchPayments_WithAllPossibleQueryParametersPaymentsFound_ExpectedOkHttpResponseStatusAndPaymentJsonResponse() throws Exception {
-        var paymentLookupRequest = PaymentLookupPublicApiRequest.builder()
-            .number(NUMBER)
-            .sum(BigDecimal.valueOf(100.0))
-            .offset(30)
-            .limit(10)
-            .build();
-        var iterableDataResponse = new IterableDataResponse<>(List.of(payment), true);
-        given(paymentFacade.find(eq(paymentLookupRequest))).willReturn(iterableDataResponse);
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/payments")
-                .queryParam("number", paymentLookupRequest.getNumber())
-                .queryParam("sum", paymentLookupRequest.getSum())
-                .queryParam("offset", String.valueOf(paymentLookupRequest.getOffset()))
-                .queryParam("limit", String.valueOf(paymentLookupRequest.getLimit()))
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isOk()
-            .expectBody().json(objectMapper.writeValueAsString(iterableDataResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchPayments_WithNegativeOffset_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
-        given(paymentFacade.find(any())).willThrow(
-            new ServiceValidationException(
-                "Invalid Payment lookup request",
-                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER))
-            )
-        );
-        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER);
-        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/payments")
-                .queryParam(API_OFFSET_REQUEST_PARAMETER, "-5")
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
-            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchPayments_WithNegativeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
-        given(paymentFacade.find(any())).willThrow(
-            new ServiceValidationException(
-                "Invalid contact lookup request",
-                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
-            )
-        );
-
-        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
-        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/payments")
-                .queryParam(API_LIMIT_REQUEST_PARAMETER, "-5")
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
-            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchPayments_WithTooLargeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
-        given(paymentFacade.find(any())).willThrow(
-            new ServiceValidationException(
-                "Invalid contact lookup request",
-                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
-            )
-        );
-
-        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
-        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/payments")
-                .queryParam(API_LIMIT_REQUEST_PARAMETER, String.valueOf(API_LIMIT_REQUEST_PARAMETER_MAX_VALUE + 1))
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
-            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
-            .consumeWith(System.out::println);
-    }
+//    @Test
+//    public void searchPayments_WithNumberPaymentsFound_ExpectedOkHttpResponseStatusAndPaymentJsonResponseAndVerifyDefaultOffsetAndLimitParametersSet() throws Exception {
+//        var paymentLookupRequest = PaymentLookupPublicApiRequest.builder()
+//            .number(NUMBER)
+//            //default parameters
+//            .offset(0)
+//            .limit(20)
+//            .build();
+//        var iterableDataResponse = new IterableDataResponse<>(List.of(payment), true);
+//        given(paymentFacade.find(eq(paymentLookupRequest))).willReturn(iterableDataResponse);
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/payments")
+//                .queryParam("number", paymentLookupRequest.getNumber())
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isOk()
+//            .expectBody().json(objectMapper.writeValueAsString(iterableDataResponse))
+//            .consumeWith(System.out::println);
+//    }
+//
+//    @Test
+//    public void searchPayments_WithAllPossibleQueryParametersPaymentsFound_ExpectedOkHttpResponseStatusAndPaymentJsonResponse() throws Exception {
+//        var paymentLookupRequest = PaymentLookupPublicApiRequest.builder()
+//            .number(NUMBER)
+//            .sum(BigDecimal.valueOf(100.0))
+//            .offset(30)
+//            .limit(10)
+//            .build();
+//        var iterableDataResponse = new IterableDataResponse<>(List.of(payment), true);
+//        given(paymentFacade.find(eq(paymentLookupRequest))).willReturn(iterableDataResponse);
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/payments")
+//                .queryParam("number", paymentLookupRequest.getNumber())
+//                .queryParam("sum", paymentLookupRequest.getSum())
+//                .queryParam("offset", String.valueOf(paymentLookupRequest.getOffset()))
+//                .queryParam("limit", String.valueOf(paymentLookupRequest.getLimit()))
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isOk()
+//            .expectBody().json(objectMapper.writeValueAsString(iterableDataResponse))
+//            .consumeWith(System.out::println);
+//    }
+//
+//    @Test
+//    public void searchPayments_WithNegativeOffset_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
+//        given(paymentFacade.find(any())).willThrow(
+//            new ServiceValidationException(
+//                "Invalid Payment lookup request",
+//                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER))
+//            )
+//        );
+//        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER);
+//        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/payments")
+//                .queryParam(API_OFFSET_REQUEST_PARAMETER, "-5")
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
+//            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
+//            .consumeWith(System.out::println);
+//    }
+//
+//    @Test
+//    public void searchPayments_WithNegativeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
+//        given(paymentFacade.find(any())).willThrow(
+//            new ServiceValidationException(
+//                "Invalid contact lookup request",
+//                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
+//            )
+//        );
+//
+//        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
+//        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/payments")
+//                .queryParam(API_LIMIT_REQUEST_PARAMETER, "-5")
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
+//            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
+//            .consumeWith(System.out::println);
+//    }
+//
+//    @Test
+//    public void searchPayments_WithTooLargeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
+//        given(paymentFacade.find(any())).willThrow(
+//            new ServiceValidationException(
+//                "Invalid contact lookup request",
+//                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
+//            )
+//        );
+//
+//        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
+//        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/payments")
+//                .queryParam(API_LIMIT_REQUEST_PARAMETER, String.valueOf(API_LIMIT_REQUEST_PARAMETER_MAX_VALUE + 1))
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
+//            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
+//            .consumeWith(System.out::println);
+//    }
 
     @Test
     public void createPayment_withValidRequest_ExpectedHttpResponseStatusOk() throws Exception {

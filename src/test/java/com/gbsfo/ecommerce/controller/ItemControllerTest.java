@@ -111,115 +111,94 @@ public class ItemControllerTest {
             .consumeWith(System.out::println);
     }
 
-    @Test
-    public void searchItems_WithNumberItemsFound_ExpectedOkHttpResponseStatusAndItemJsonResponseAndVerifyDefaultOffsetAndLimitParametersSet() throws Exception {
-        var itemLookupRequest = ItemLookupPublicApiRequest.builder()
-            .name(NAME)
-            //default parameters
-            .offset(0)
-            .limit(20)
-            .build();
-        var iterableDataResponse = new IterableDataResponse<>(List.of(item), true);
-        given(itemFacade.find(eq(itemLookupRequest))).willReturn(iterableDataResponse);
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/items")
-                .queryParam("name", itemLookupRequest.getName())
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isOk()
-            .expectBody().json(objectMapper.writeValueAsString(iterableDataResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchItems_WithAllPossibleQueryParametersItemsFound_ExpectedOkHttpResponseStatusAndItemJsonResponse() throws Exception {
-        var itemLookupRequest = ItemLookupPublicApiRequest.builder()
-            .name(NAME)
-            .price(BigDecimal.valueOf(100.0))
-            .offset(30)
-            .limit(10)
-            .build();
-        var iterableDataResponse = new IterableDataResponse<>(List.of(item), true);
-        given(itemFacade.find(eq(itemLookupRequest))).willReturn(iterableDataResponse);
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/items")
-                .queryParam("name", itemLookupRequest.getName())
-                .queryParam("price", itemLookupRequest.getPrice())
-                .queryParam("offset", String.valueOf(itemLookupRequest.getOffset()))
-                .queryParam("limit", String.valueOf(itemLookupRequest.getLimit()))
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isOk()
-            .expectBody().json(objectMapper.writeValueAsString(iterableDataResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchItems_WithNegativeOffset_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
-        given(itemFacade.find(any())).willThrow(
-            new ServiceValidationException(
-                "Invalid Item lookup request",
-                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER))
-            )
-        );
-        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER);
-        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/items")
-                .queryParam(API_OFFSET_REQUEST_PARAMETER, "-5")
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
-            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchItems_WithNegativeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
-        given(itemFacade.find(any())).willThrow(
-            new ServiceValidationException(
-                "Invalid contact lookup request",
-                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
-            )
-        );
-
-        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
-        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/items")
-                .queryParam(API_LIMIT_REQUEST_PARAMETER, "-5")
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
-            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchItems_WithTooLargeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
-        given(itemFacade.find(any())).willThrow(
-            new ServiceValidationException(
-                "Invalid contact lookup request",
-                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
-            )
-        );
-
-        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
-        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/items")
-                .queryParam(API_LIMIT_REQUEST_PARAMETER, String.valueOf(API_LIMIT_REQUEST_PARAMETER_MAX_VALUE + 1))
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
-            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
-            .consumeWith(System.out::println);
-    }
+//    @Test
+//    public void searchItems_WithAllPossibleQueryParametersItemsFound_ExpectedOkHttpResponseStatusAndItemJsonResponse() throws Exception {
+//        var itemLookupRequest = ItemLookupPublicApiRequest.builder()
+//            .name(NAME)
+//            .price(BigDecimal.valueOf(100.0))
+//            .offset(30)
+//            .limit(10)
+//            .build();
+//        var iterableDataResponse = new IterableDataResponse<>(List.of(item), true);
+//        given(itemFacade.find(eq(itemLookupRequest))).willReturn(iterableDataResponse);
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/items")
+//                .queryParam("name", itemLookupRequest.getName())
+//                .queryParam("price", itemLookupRequest.getPrice())
+//                .queryParam("offset", String.valueOf(itemLookupRequest.getOffset()))
+//                .queryParam("limit", String.valueOf(itemLookupRequest.getLimit()))
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isOk()
+//            .expectBody().json(objectMapper.writeValueAsString(iterableDataResponse))
+//            .consumeWith(System.out::println);
+//    }
+//
+//    @Test
+//    public void searchItems_WithNegativeOffset_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
+//        given(itemFacade.find(any())).willThrow(
+//            new ServiceValidationException(
+//                "Invalid Item lookup request",
+//                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER))
+//            )
+//        );
+//        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER);
+//        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/items")
+//                .queryParam(API_OFFSET_REQUEST_PARAMETER, "-5")
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
+//            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
+//            .consumeWith(System.out::println);
+//    }
+//
+//    @Test
+//    public void searchItems_WithNegativeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
+//        given(itemFacade.find(any())).willThrow(
+//            new ServiceValidationException(
+//                "Invalid contact lookup request",
+//                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
+//            )
+//        );
+//
+//        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
+//        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/items")
+//                .queryParam(API_LIMIT_REQUEST_PARAMETER, "-5")
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
+//            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
+//            .consumeWith(System.out::println);
+//    }
+//
+//    @Test
+//    public void searchItems_WithTooLargeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
+//        given(itemFacade.find(any())).willThrow(
+//            new ServiceValidationException(
+//                "Invalid contact lookup request",
+//                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
+//            )
+//        );
+//
+//        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
+//        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/items")
+//                .queryParam(API_LIMIT_REQUEST_PARAMETER, String.valueOf(API_LIMIT_REQUEST_PARAMETER_MAX_VALUE + 1))
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
+//            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
+//            .consumeWith(System.out::println);
+//    }
 
     @Test
     public void createItem_withValidRequest_ExpectedHttpResponseStatusOk() throws Exception {

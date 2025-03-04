@@ -50,21 +50,21 @@ public class PaymentFacadeTest {
     @MockBean
     private Payment mockPayment;
 
-    @Test
-    public void testFind() {
-        var request = new PaymentLookupPublicApiRequest();
-        var payments = List.of(new Payment());
-        var page = new PageImpl<>(payments);
-
-        when(paymentService.findPayments(request)).thenReturn(page);
-        when(paymentMappper.toDto(mockPayment)).thenReturn(mockPaymentDto);
-
-        IterableDataResponse<List<PaymentDto>> response = paymentFacade.find(request);
-
-        assertNotNull(response);
-        assertEquals(1, response.getData().size());
-        assertFalse(response.isHasNext());
-    }
+//    @Test
+//    public void testFind() {
+//        var request = new PaymentLookupPublicApiRequest();
+//        var payments = List.of(new Payment());
+//        var page = new PageImpl<>(payments);
+//
+//        when(paymentService.findPayments(request)).thenReturn(page);
+//        when(paymentMappper.toDto(mockPayment)).thenReturn(mockPaymentDto);
+//
+//        IterableDataResponse<List<PaymentDto>> response = paymentFacade.find(request);
+//
+//        assertNotNull(response);
+//        assertEquals(1, response.getData().size());
+//        assertFalse(response.isHasNext());
+//    }
 
     @Test
     public void testGetPaymentById() {

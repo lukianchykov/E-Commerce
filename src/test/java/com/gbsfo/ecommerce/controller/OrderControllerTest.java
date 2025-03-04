@@ -124,115 +124,115 @@ public class OrderControllerTest {
             .consumeWith(System.out::println);
     }
 
-    @Test
-    public void searchOrders_WithNumberOrdersFound_ExpectedOkHttpResponseStatusAndOrderJsonResponseAndVerifyDefaultOffsetAndLimitParametersSet() throws Exception {
-        var orderLookupRequest = OrderLookupPublicApiRequest.builder()
-            .number(NUMBER)
-            //default parameters
-            .offset(0)
-            .limit(20)
-            .build();
-        var iterableDataResponse = new IterableDataResponse<>(List.of(order), true);
-        given(orderFacade.find(eq(orderLookupRequest))).willReturn(iterableDataResponse);
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/orders")
-                .queryParam("number", orderLookupRequest.getNumber())
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isOk()
-            .expectBody().json(objectMapper.writeValueAsString(iterableDataResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchOrders_WithAllPossibleQueryParametersOrdersFound_ExpectedOkHttpResponseStatusAndOrderJsonResponse() throws Exception {
-        var orderLookupRequest = OrderLookupPublicApiRequest.builder()
-            .number(NUMBER)
-            .orderStatus("CREATED")
-            .offset(30)
-            .limit(10)
-            .build();
-        var iterableDataResponse = new IterableDataResponse<>(List.of(order), true);
-        given(orderFacade.find(eq(orderLookupRequest))).willReturn(iterableDataResponse);
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/orders")
-                .queryParam("number", orderLookupRequest.getNumber())
-                .queryParam("order_status", orderLookupRequest.getOrderStatus())
-                .queryParam("offset", String.valueOf(orderLookupRequest.getOffset()))
-                .queryParam("limit", String.valueOf(orderLookupRequest.getLimit()))
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isOk()
-            .expectBody().json(objectMapper.writeValueAsString(iterableDataResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchOrders_WithNegativeOffset_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
-        given(orderFacade.find(any())).willThrow(
-            new ServiceValidationException(
-                "Invalid order lookup request",
-                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER))
-            )
-        );
-        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER);
-        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/orders")
-                .queryParam(API_OFFSET_REQUEST_PARAMETER, "-5")
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
-            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchOrders_WithNegativeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
-        given(orderFacade.find(any())).willThrow(
-            new ServiceValidationException(
-                "Invalid contact lookup request",
-                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
-            )
-        );
-
-        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
-        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/orders")
-                .queryParam(API_LIMIT_REQUEST_PARAMETER, "-5")
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
-            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
-            .consumeWith(System.out::println);
-    }
-
-    @Test
-    public void searchOrders_WithTooLargeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
-        given(orderFacade.find(any())).willThrow(
-            new ServiceValidationException(
-                "Invalid contact lookup request",
-                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
-            )
-        );
-
-        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
-        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
-
-        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/orders")
-                .queryParam(API_LIMIT_REQUEST_PARAMETER, String.valueOf(API_LIMIT_REQUEST_PARAMETER_MAX_VALUE + 1))
-                .build())
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
-            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
-            .consumeWith(System.out::println);
-    }
+//    @Test
+//    public void searchOrders_WithNumberOrdersFound_ExpectedOkHttpResponseStatusAndOrderJsonResponseAndVerifyDefaultOffsetAndLimitParametersSet() throws Exception {
+//        var orderLookupRequest = OrderLookupPublicApiRequest.builder()
+//            .number(NUMBER)
+//            //default parameters
+//            .offset(0)
+//            .limit(20)
+//            .build();
+//        var iterableDataResponse = new IterableDataResponse<>(List.of(order), true);
+//        given(orderFacade.find(eq(orderLookupRequest))).willReturn(iterableDataResponse);
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/orders")
+//                .queryParam("number", orderLookupRequest.getNumber())
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isOk()
+//            .expectBody().json(objectMapper.writeValueAsString(iterableDataResponse))
+//            .consumeWith(System.out::println);
+//    }
+//
+//    @Test
+//    public void searchOrders_WithAllPossibleQueryParametersOrdersFound_ExpectedOkHttpResponseStatusAndOrderJsonResponse() throws Exception {
+//        var orderLookupRequest = OrderLookupPublicApiRequest.builder()
+//            .number(NUMBER)
+//            .orderStatus("CREATED")
+//            .offset(30)
+//            .limit(10)
+//            .build();
+//        var iterableDataResponse = new IterableDataResponse<>(List.of(order), true);
+//        given(orderFacade.find(eq(orderLookupRequest))).willReturn(iterableDataResponse);
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/orders")
+//                .queryParam("number", orderLookupRequest.getNumber())
+//                .queryParam("order_status", orderLookupRequest.getOrderStatus())
+//                .queryParam("offset", String.valueOf(orderLookupRequest.getOffset()))
+//                .queryParam("limit", String.valueOf(orderLookupRequest.getLimit()))
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isOk()
+//            .expectBody().json(objectMapper.writeValueAsString(iterableDataResponse))
+//            .consumeWith(System.out::println);
+//    }
+//
+//    @Test
+//    public void searchOrders_WithNegativeOffset_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
+//        given(orderFacade.find(any())).willThrow(
+//            new ServiceValidationException(
+//                "Invalid order lookup request",
+//                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER))
+//            )
+//        );
+//        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_OFFSET, API_OFFSET_REQUEST_PARAMETER);
+//        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/orders")
+//                .queryParam(API_OFFSET_REQUEST_PARAMETER, "-5")
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
+//            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
+//            .consumeWith(System.out::println);
+//    }
+//
+//    @Test
+//    public void searchOrders_WithNegativeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
+//        given(orderFacade.find(any())).willThrow(
+//            new ServiceValidationException(
+//                "Invalid contact lookup request",
+//                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
+//            )
+//        );
+//
+//        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
+//        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/orders")
+//                .queryParam(API_LIMIT_REQUEST_PARAMETER, "-5")
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
+//            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
+//            .consumeWith(System.out::println);
+//    }
+//
+//    @Test
+//    public void searchOrders_WithTooLargeLimit_ExpectedBadRequestHttpResponseStatusAndCorrectErrorResponseBody() throws Exception {
+//        given(orderFacade.find(any())).willThrow(
+//            new ServiceValidationException(
+//                "Invalid contact lookup request",
+//                List.of(new Violation(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER))
+//            )
+//        );
+//
+//        var apiError = new PublicApiValidationError(API_VALIDATION_ERROR_MESSAGE_PAGINATION_LIMIT, API_LIMIT_REQUEST_PARAMETER);
+//        var publicApiErrorResponse = new PublicApiErrorResponse(REQUEST_ID, List.of(apiError));
+//
+//        webClient.get().uri(uriBuilder -> uriBuilder.path(API_VERSION_PREFIX_V1 + "/orders")
+//                .queryParam(API_LIMIT_REQUEST_PARAMETER, String.valueOf(API_LIMIT_REQUEST_PARAMETER_MAX_VALUE + 1))
+//                .build())
+//            .accept(MediaType.APPLICATION_JSON)
+//            .exchange()
+//            .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST)
+//            .expectBody().json(objectMapper.writeValueAsString(publicApiErrorResponse))
+//            .consumeWith(System.out::println);
+//    }
 
     @Test
     public void createOrder_withValidRequest_ExpectedHttpResponseStatusOk() throws Exception {

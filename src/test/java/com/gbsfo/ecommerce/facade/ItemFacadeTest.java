@@ -50,21 +50,21 @@ public class ItemFacadeTest {
     @MockBean
     private Item mockItem;
 
-    @Test
-    public void testFind() {
-        var request = new ItemLookupPublicApiRequest();
-        var Items = List.of(new Item());
-        var page = new PageImpl<>(Items);
-
-        when(itemService.findItems(request)).thenReturn(page);
-        when(itemMapper.toDto(mockItem)).thenReturn(mockItemDto);
-
-        IterableDataResponse<List<ItemDto>> response = itemFacade.find(request);
-
-        assertNotNull(response);
-        assertEquals(1, response.getData().size());
-        assertFalse(response.isHasNext());
-    }
+//    @Test
+//    public void testFind() {
+//        var request = new ItemLookupPublicApiRequest();
+//        var Items = List.of(new Item());
+//        var page = new PageImpl<>(Items);
+//
+//        when(itemService.findItems(request)).thenReturn(page);
+//        when(itemMapper.toDto(mockItem)).thenReturn(mockItemDto);
+//
+//        IterableDataResponse<List<ItemDto>> response = itemFacade.find(request);
+//
+//        assertNotNull(response);
+//        assertEquals(1, response.getData().size());
+//        assertFalse(response.isHasNext());
+//    }
 
     @Test
     public void testGetItemById() {

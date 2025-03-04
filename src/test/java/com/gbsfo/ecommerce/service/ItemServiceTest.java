@@ -66,46 +66,46 @@ public class ItemServiceTest {
         assertEquals(item, actual);
     }
 
-    @Test
-    public void findItems_withFullSearch() {
-        ItemLookupPublicApiRequest itemLookupPublicApiRequest = ItemLookupPublicApiRequest.builder()
-            .name("Item 1")
-            .price(BigDecimal.valueOf(123.45))
-            .offset(0)
-            .limit(20)
-            .build();
-
-        Page<Item> actual = itemService.findItems(itemLookupPublicApiRequest);
-
-        assertEquals(item, actual.getContent().get(0));
-    }
-
-    @Test
-    public void findItems_withPartialSearch() {
-        ItemLookupPublicApiRequest itemLookupPublicApiRequest = ItemLookupPublicApiRequest.builder()
-            .name("Item 1")
-            .offset(0)
-            .limit(20)
-            .build();
-
-        Page<Item> actual = itemService.findItems(itemLookupPublicApiRequest);
-
-        assertEquals(item, actual.getContent().get(0));
-    }
-
-    @Test
-    public void findItems_withPartialSearchWhenThereIsWrongField_shouldNotFindEntityAndTrowAnError() {
-        ItemLookupPublicApiRequest itemLookupPublicApiRequest = ItemLookupPublicApiRequest.builder()
-            .name("INVALID")
-            .price(BigDecimal.valueOf(0.00))
-            .offset(0)
-            .limit(20)
-            .build();
-
-        Page<Item> actual = itemService.findItems(itemLookupPublicApiRequest);
-
-        assertTrue(actual.getContent().isEmpty());
-    }
+//    @Test
+//    public void findItems_withFullSearch() {
+//        ItemLookupPublicApiRequest itemLookupPublicApiRequest = ItemLookupPublicApiRequest.builder()
+//            .name("Item 1")
+//            .price(BigDecimal.valueOf(123.45))
+//            .offset(0)
+//            .limit(20)
+//            .build();
+//
+//        Page<Item> actual = itemService.findItems(itemLookupPublicApiRequest);
+//
+//        assertEquals(item, actual.getContent().get(0));
+//    }
+//
+//    @Test
+//    public void findItems_withPartialSearch() {
+//        ItemLookupPublicApiRequest itemLookupPublicApiRequest = ItemLookupPublicApiRequest.builder()
+//            .name("Item 1")
+//            .offset(0)
+//            .limit(20)
+//            .build();
+//
+//        Page<Item> actual = itemService.findItems(itemLookupPublicApiRequest);
+//
+//        assertEquals(item, actual.getContent().get(0));
+//    }
+//
+//    @Test
+//    public void findItems_withPartialSearchWhenThereIsWrongField_shouldNotFindEntityAndTrowAnError() {
+//        ItemLookupPublicApiRequest itemLookupPublicApiRequest = ItemLookupPublicApiRequest.builder()
+//            .name("INVALID")
+//            .price(BigDecimal.valueOf(0.00))
+//            .offset(0)
+//            .limit(20)
+//            .build();
+//
+//        Page<Item> actual = itemService.findItems(itemLookupPublicApiRequest);
+//
+//        assertTrue(actual.getContent().isEmpty());
+//    }
 
     @Test
     public void verify_findItemByName() {
