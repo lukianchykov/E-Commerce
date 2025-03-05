@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7e6b4268-dadb-4326-84eb-77d8c05cf3d3" name="Changes" comment="Minor changes">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/843772d5-7a54-40c3-a860-1c3f2060c196.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/843772d5-7a54-40c3-a860-1c3f2060c196/storage_v2/_src_/schema/ecommercedb.vjID9A.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/843772d5-7a54-40c3-a860-1c3f2060c196/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/HELP.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/src/main/java/com/gbsfo/ecommerce/OrderManagementApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/src/main/java/com/gbsfo/ecommerce/config/AutoCreateConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/src/main/java/com/gbsfo/ecommerce/domain/ItemEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/src/main/java/com/gbsfo/ecommerce/domain/OrderEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/src/main/java/com/gbsfo/ecommerce/domain/PaymentEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/src/test/java/com/gbsfo/ecommerce/OrderManagementApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/target/classes/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-management/target/classes/com/gbsfo/ecommerce/OrderManagementApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/avro/com.gbsfo.kafka.order.ItemCreated.avsc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/avro/com.gbsfo.kafka.order.ItemDeleted.avsc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/avro/com.gbsfo.kafka.order.ItemUpdated.avsc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/avro/com.gbsfo.kafka.order.OrderCreated.avsc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/avro/com.gbsfo.kafka.order.OrderDeleted.avsc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/avro/com.gbsfo.kafka.order.OrderUpdated.avsc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/avro/com.gbsfo.kafka.order.PaymentCreated.avsc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/avro/com.gbsfo.kafka.order.PaymentDeleted.avsc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/avro/com.gbsfo.kafka.order.PaymentUpdated.avsc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/ecommerce/config/AutoCreateConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/ecommerce/kafka/producer/KafkaItemEventProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/ecommerce/kafka/producer/KafkaOrderEventProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/ecommerce/kafka/producer/KafkaPaymentEventProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/kafka/item/ItemCreated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/kafka/item/ItemDeleted.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/kafka/item/ItemUpdated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/kafka/order/OrderCreated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/kafka/order/OrderDeleted.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/kafka/order/OrderStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/kafka/order/OrderUpdated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/kafka/payment/PaymentCreated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/kafka/payment/PaymentDeleted.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/kafka/payment/PaymentUpdated.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/ECommerceApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/controller/ItemController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/controller/OrderController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/controller/PaymentController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/controller/exception/PublicApiErrorResponse$PublicApiError.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/controller/exception/PublicApiErrorResponse$PublicApiValidationError.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/controller/exception/PublicApiErrorResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/controller/exception/ResourceAlreadyExistException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/controller/exception/ResourceNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/controller/exception/ServiceValidationException$Violation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/controller/exception/ServiceValidationException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/controller/handler/ControllerExceptionHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Item$ItemBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Item$ItemBuilderImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Item.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Item_.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Order$OrderBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Order$OrderBuilderImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Order$OrderStatus.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Order.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Order_.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Payment$PaymentBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Payment$PaymentBuilderImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Payment.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/Payment_.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/security/ERole.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/security/Role$RoleBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/security/Role$RoleBuilderImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/security/Role.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/security/Role_.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/security/User$UserBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/security/User$UserBuilderImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/security/User.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/domain/security/User_.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/DataResponse$DataResponseBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/DataResponse$DataResponseBuilderImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/DataResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/ItemDto$ItemDtoBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/ItemDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/ItemLookupPublicApiRequest$ItemLookupPublicApiRequestBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/ItemLookupPublicApiRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/IterableDataResponse$IterableDataResponseBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/IterableDataResponse$IterableDataResponseBuilderImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/IterableDataResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/OrderDto$OrderDtoBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/OrderDto$OrderStatus.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/OrderDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/OrderLookupPublicApiRequest$OrderLookupPublicApiRequestBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/OrderLookupPublicApiRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/OrderUpsertRequest$OrderStatus.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/OrderUpsertRequest$OrderUpsertRequestBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/OrderUpsertRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/PaymentDto$PaymentDtoBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/PaymentDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/PaymentLookupPublicApiRequest$PaymentLookupPublicApiRequestBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/PaymentLookupPublicApiRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/payload/request/LoginRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/payload/request/SignupRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/payload/response/JwtResponse$JwtResponseBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/payload/response/JwtResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/payload/response/MessageResponse$MessageResponseBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/dto/payload/response/MessageResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/facade/ItemFacade.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/facade/OrderFacade.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/facade/PaymentFacade.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/mapper/ItemMapper.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/mapper/ItemMapperImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/mapper/OrderMapper.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/mapper/OrderMapperImpl$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/mapper/OrderMapperImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/mapper/PaymentMapper.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/mapper/PaymentMapperImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/repository/ItemRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/repository/OrderRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/repository/PaymentRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/repository/security/RoleRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/repository/security/UserRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/security/WebSecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/security/jwt/AuthEntryPointJwt.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/security/jwt/AuthTokenFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/security/jwt/JwtUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/service/IItemService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/service/IOrderService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/service/IPaymentService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/service/impl/ItemService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/service/impl/OrderService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/service/impl/PaymentService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/service/security/UserDetailsImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/service/security/UserDetailsServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/ApiError.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/Constants.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/FieldMatch$List.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/FieldMatch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/FieldMatchValidator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/FunctionalUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/LogStructuredArguments.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/MapperUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/ValidationError.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/identifiable/IdentifiableEntity$IdentifiableEntityBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/identifiable/IdentifiableEntity$IdentifiableEntityBuilderImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/identifiable/IdentifiableEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/identifiable/IdentifiableEntity_.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/jackson/ApiJacksonSettings.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/ecommerce/utils/time/TimeUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/item/ItemCreated$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/item/ItemCreated.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/item/ItemDeleted$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/item/ItemDeleted.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/item/ItemUpdated$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/item/ItemUpdated.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/order/OrderCreated$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/order/OrderCreated.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/order/OrderDeleted$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/order/OrderDeleted.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/order/OrderStatus.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/order/OrderUpdated$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/order/OrderUpdated.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/payment/PaymentCreated$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/payment/PaymentCreated.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/payment/PaymentDeleted$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/payment/PaymentDeleted.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/payment/PaymentUpdated$Builder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/gbsfo/kafka/payment/PaymentUpdated.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/db/db.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/db/migration/V1__init.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/gbsfo/ecommerce/domain/Item_.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/gbsfo/ecommerce/domain/Order_.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/gbsfo/ecommerce/domain/Payment_.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/gbsfo/ecommerce/domain/security/Role_.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/gbsfo/ecommerce/domain/security/User_.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/gbsfo/ecommerce/mapper/ItemMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/gbsfo/ecommerce/mapper/OrderMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/gbsfo/ecommerce/mapper/PaymentMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/gbsfo/ecommerce/utils/identifiable/IdentifiableEntity_.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/2025-03-04T10-36-41_421-jvmRun1.dump" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/2025-03-05T15-52-03_881-jvmRun1.dump" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/2025-03-05T15-52-03_881-jvmRun1.dumpstream" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/2025-03-05T16-05-31_824-jvmRun1.dump" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/2025-03-05T16-05-31_824-jvmRun1.dumpstream" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.controller.ItemControllerTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.controller.OrderControllerTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.controller.PaymentControllerTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.facade.ItemFacadeTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.facade.OrderFacadeTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.facade.PaymentFacadeTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.mapper.ItemMapperTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.mapper.OrderMapperTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.mapper.PaymentMapperTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.repository.ItemRepositoryTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.repository.OrderRepositoryTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.repository.PaymentRepositoryTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.service.ItemServiceTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.service.OrderServiceTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.gbsfo.ecommerce.service.PaymentServiceTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.controller.ItemControllerTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.controller.OrderControllerTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.controller.PaymentControllerTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.facade.ItemFacadeTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.facade.OrderFacadeTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.facade.PaymentFacadeTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.mapper.ItemMapperTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.mapper.OrderMapperTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.mapper.PaymentMapperTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.repository.ItemRepositoryTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.repository.OrderRepositoryTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.repository.PaymentRepositoryTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.service.ItemServiceTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.service.OrderServiceTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.gbsfo.ecommerce.service.PaymentServiceTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/configuration/TimeUtilsTestConfiguration.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/configuration/WebFluxSecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/controller/ItemControllerTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/controller/OrderControllerTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/controller/PaymentControllerTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/facade/ItemFacadeTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/facade/OrderFacadeTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/facade/PaymentFacadeTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/mapper/ItemMapperTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/mapper/OrderMapperTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/mapper/PaymentMapperTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/repository/ItemRepositoryTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/repository/OrderRepositoryTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/repository/PaymentRepositoryTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/service/ItemServiceTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/service/OrderServiceTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/gbsfo/ecommerce/service/PaymentServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gbsfo/ecommerce/service/impl/ItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/ecommerce/service/impl/ItemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gbsfo/ecommerce/service/impl/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/ecommerce/service/impl/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gbsfo/ecommerce/service/impl/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gbsfo/ecommerce/service/impl/PaymentService.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;lukianchykov&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/lukianchykov/E-Commerce.git&quot;,
+    &quot;accountId&quot;: &quot;51823693-b095-44f7-b60e-58d4e1f403f1&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="C:\Users\lukan\.m2\repository" />
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+        <option name="userSettingsFile" value="C:\Users\lukan\.m2\settings_home.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2tqPJfTHBK9m4tJ7sMokEGg5R3W" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.Dockerfile.executor": "Run",
+    "Docker.docker-compose.yml.database: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.ecommerce: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "JUnit.All in e-commerce.executor": "Run",
+    "JUnit.com.gbsfo.ecommerce.facade in e-commerce.executor": "Run",
+    "JUnit.com.gbsfo.ecommerce.repository in e-commerce.executor": "Run",
+    "Maven.e-commerce [clean].executor": "Run",
+    "Maven.e-commerce [install].executor": "Run",
+    "Maven.e-commerce [package].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.ECommerceApplication.executor": "Run",
+    "Spring Boot.OrderManagementApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/lukan/IdeaProjects/E-Commerce/src/main/java/com/gbsfo/ecommerce",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\lukan\IdeaProjects\E-Commerce\src\main\java\com\gbsfo\ecommerce" />
+      <recent name="C:\Users\lukan\IdeaProjects\E-Commerce\src\main\java\com\gbsfo\ecommerce\kafka" />
+      <recent name="C:\Users\lukan\IdeaProjects\E-Commerce\src\main\avro" />
+      <recent name="C:\Users\lukan\IdeaProjects\E-Commerce\order-management" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lukan\IdeaProjects\E-Commerce\src\main" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.OrderManagementApplication">
+    <configuration name="All in e-commerce" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="e-commerce" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.gbsfo.ecommerce.facade in e-commerce" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="e-commerce" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gbsfo.ecommerce.facade.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gbsfo.ecommerce.facade" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.gbsfo.ecommerce.repository in e-commerce" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="e-commerce" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gbsfo.ecommerce.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gbsfo.ecommerce.repository" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ECommerceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="e-commerce" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.gbsfo.ecommerce.ECommerceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="order-management" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.gbsfo.ecommerce.OrderManagementApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.database: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="database" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.ecommerce: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="ecommerce" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.yml.ecommerce: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.database: Compose Deployment" />
+        <item itemvalue="JUnit.com.gbsfo.ecommerce.repository in e-commerce" />
+        <item itemvalue="JUnit.com.gbsfo.ecommerce.facade in e-commerce" />
+        <item itemvalue="JUnit.All in e-commerce" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7e6b4268-dadb-4326-84eb-77d8c05cf3d3" name="Changes" comment="" />
+      <created>1741076561379</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741076561379</updated>
+      <workItem from="1741076562727" duration="4624000" />
+      <workItem from="1741163070082" duration="3850000" />
+      <workItem from="1741168324579" duration="31000" />
+      <workItem from="1741168419108" duration="39000" />
+      <workItem from="1741180342655" duration="7243000" />
+    </task>
+    <task id="LOCAL-00001" summary="Fixed minor things to start Application">
+      <option name="closed" value="true" />
+      <created>1741079044734</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1741079044734</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Commented Pagination">
+      <option name="closed" value="true" />
+      <created>1741079599343</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741079599344</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Commented Pagination in Test">
+      <option name="closed" value="true" />
+      <created>1741079840262</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1741079840262</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Minor changes">
+      <option name="closed" value="true" />
+      <created>1741079904474</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1741079904474</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixed minor things to start Application" />
+    <MESSAGE value="Comment Pagination" />
+    <MESSAGE value="Commented Pagination" />
+    <MESSAGE value="Commented Pagination in Test" />
+    <MESSAGE value="Minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor changes" />
+  </component>
+</project>

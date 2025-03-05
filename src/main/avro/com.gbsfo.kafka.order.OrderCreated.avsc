@@ -1,0 +1,21 @@
+{
+  "type" : "record",
+  "name" : "OrderCreated",
+  "namespace" : "com.gbsfo.kafka.order",
+  "fields" : [ {
+    "name" : "order_id",
+    "type" : "long",
+    "doc" : "Order's ID"
+  }, {
+    "name" : "number",
+    "type" : "string",
+    "doc" : "Number"
+  }, {
+    "name" : "orderStatus",
+    "type" : {
+      "type" : "enum",
+      "name" : "OrderStatus",
+      "symbols" : [ "CREATED", "PROCESSING", "SHIPPING", "DELIVERED" ]
+    }
+  }]
+}

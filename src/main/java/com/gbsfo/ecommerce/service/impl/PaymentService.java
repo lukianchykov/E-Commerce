@@ -8,6 +8,7 @@ import com.gbsfo.ecommerce.controller.exception.ResourceAlreadyExistException;
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
 import com.gbsfo.ecommerce.domain.Payment;
 import com.gbsfo.ecommerce.dto.PaymentDto;
+import com.gbsfo.ecommerce.kafka.producer.KafkaPaymentEventProducer;
 import com.gbsfo.ecommerce.mapper.PaymentMapper;
 import com.gbsfo.ecommerce.repository.PaymentRepository;
 import com.gbsfo.ecommerce.service.IPaymentService;
@@ -30,6 +31,9 @@ public class PaymentService implements IPaymentService {
 
     @Autowired
     private PaymentMapper paymentMapper;
+
+    @Autowired
+    private KafkaPaymentEventProducer kafkaPaymentEventProducer;
 
 //    /**
 //     * Public API find payments request
@@ -73,6 +77,7 @@ public class PaymentService implements IPaymentService {
             throw new ResourceAlreadyExistException("Payment already exists. Can’t create new Payment with same number: " + payment.getNumber());
         }
         log.info("Saving Payment in database {}", payment);
+        kafkaPaymentEventProducer.sendPaymentEventCreated(payment);
         return paymentRepository.save(payment);
     }
 
@@ -85,6 +90,7 @@ public class PaymentService implements IPaymentService {
         log.info("Updating Payment in database, source = {}, target = {}", paymentFromRequest, paymentInDatabase);
         BeanUtils.copyProperties(paymentFromRequest, paymentInDatabase, "id", "paymentDateTime");
 
+        kafkaPaymentEventProducer.sendPaymentEventUpdated(paymentInDatabase);
         return paymentRepository.save(paymentInDatabase);
     }
 
@@ -93,7 +99,8 @@ public class PaymentService implements IPaymentService {
         log.info("Payment deleted attempt for {}", paymentId(paymentId));
         var payment = paymentRepository.findById(paymentId)
             .orElseThrow(() -> new ResourceNotFoundException("Payment not found with id: ", paymentId));
-
+        log.info("Deleting payment in database {}", payment);
+        kafkaPaymentEventProducer.sendPaymentEventDeleted(payment);
         paymentRepository.deleteById(payment.getId());
     }
 

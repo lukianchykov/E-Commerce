@@ -1,0 +1,25 @@
+{
+  "type" : "record",
+  "name" : "ItemCreated",
+  "namespace" : "com.gbsfo.kafka.item",
+  "fields" : [
+    {
+      "name" : "item_id",
+      "type" : "long",
+      "doc" : "Item's ID"
+    }, {
+      "name" : "name",
+      "type" : "string",
+      "doc" : "Name"
+    },
+    {
+      "name" : "price",
+      "type" : {
+        "type" : "bytes",
+        "logicalType" : "decimal",
+        "precision" : 10,
+        "scale" : 2
+      }
+    }
+  ]
+}

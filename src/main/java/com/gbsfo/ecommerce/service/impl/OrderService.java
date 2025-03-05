@@ -10,6 +10,7 @@ import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
 import com.gbsfo.ecommerce.domain.Order;
 import com.gbsfo.ecommerce.dto.ItemDto;
 import com.gbsfo.ecommerce.dto.OrderUpsertRequest;
+import com.gbsfo.ecommerce.kafka.producer.KafkaOrderEventProducer;
 import com.gbsfo.ecommerce.mapper.ItemMapper;
 import com.gbsfo.ecommerce.mapper.OrderMapper;
 import com.gbsfo.ecommerce.repository.OrderRepository;
@@ -36,6 +37,9 @@ public class OrderService implements IOrderService {
 
     @Autowired
     private ItemMapper itemMapper;
+
+    @Autowired
+    private KafkaOrderEventProducer kafkaOrderEventProducer;
 
 //    /**
 //     * Public API find orders request
@@ -83,6 +87,7 @@ public class OrderService implements IOrderService {
         order.getTotal_items().forEach(item -> item.setOrder(order));
         order.getTotal_payments().forEach(payment -> payment.setOrder(order));
 
+        kafkaOrderEventProducer.sendOrderEventCreated(order);
         return orderRepository.save(order);
     }
 
@@ -100,7 +105,6 @@ public class OrderService implements IOrderService {
         log.info("Saving order in database {}", order);
 
         order.getTotal_items().addAll(items);
-
         return orderRepository.save(order);
     }
 
@@ -121,6 +125,7 @@ public class OrderService implements IOrderService {
         orderInDatabase.getTotal_items().forEach(item -> item.setOrder(orderInDatabase));
         orderInDatabase.getTotal_payments().forEach(payment -> payment.setOrder(orderInDatabase));
 
+        kafkaOrderEventProducer.sendOrderEventUpdated(orderInDatabase);
         return orderRepository.save(orderInDatabase);
     }
 
@@ -134,6 +139,8 @@ public class OrderService implements IOrderService {
             log.error("Order can’t be deleted. {} ", orderId(orderId));
             throw new IllegalStateException("Order can’t be deleted. " + orderId(orderId));
         }
+        log.info("Deleting order in database {}", order);
+        kafkaOrderEventProducer.sendOrderEventDeleted(order);
         orderRepository.deleteById(order.getId());
     }
 }

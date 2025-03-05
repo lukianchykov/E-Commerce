@@ -8,6 +8,7 @@ import com.gbsfo.ecommerce.controller.exception.ResourceAlreadyExistException;
 import com.gbsfo.ecommerce.controller.exception.ResourceNotFoundException;
 import com.gbsfo.ecommerce.domain.Item;
 import com.gbsfo.ecommerce.dto.ItemDto;
+import com.gbsfo.ecommerce.kafka.producer.KafkaItemEventProducer;
 import com.gbsfo.ecommerce.mapper.ItemMapper;
 import com.gbsfo.ecommerce.repository.ItemRepository;
 import com.gbsfo.ecommerce.service.IItemService;
@@ -30,6 +31,9 @@ public class ItemService implements IItemService {
 
     @Autowired
     private ItemMapper itemMapper;
+
+    @Autowired
+    private KafkaItemEventProducer kafkaItemEventProducer;
 
 //    /**
 //     * Public API find items request
@@ -72,7 +76,9 @@ public class ItemService implements IItemService {
             log.error("Item already exists. Can’t create new {} with same name: {}", itemId(item.getId()), item.getName());
             throw new ResourceAlreadyExistException("Item already exists. Can’t create new Item with same name: " + item.getName());
         }
+
         log.info("Saving item in database {}", item);
+        kafkaItemEventProducer.sendItemEventCreated(item);
         return itemRepository.save(item);
     }
 
@@ -85,6 +91,7 @@ public class ItemService implements IItemService {
         log.info("Updating item in database, source = {}, target = {}", itemFromRequest, itemInDatabase);
         BeanUtils.copyProperties(itemFromRequest, itemInDatabase, "id");
 
+        kafkaItemEventProducer.sendItemEventUpdated(itemInDatabase);
         return itemRepository.save(itemInDatabase);
     }
 
@@ -93,7 +100,8 @@ public class ItemService implements IItemService {
         log.info("Item deleted attempt for {}", itemId(itemId));
         var item = itemRepository.findById(itemId)
             .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: ", itemId));
-
+        log.info("Item deleted from  database {}", item);
+        kafkaItemEventProducer.sendItemEventDeleted(item);
         itemRepository.deleteById(item.getId());
     }
 }
