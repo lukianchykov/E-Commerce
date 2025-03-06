@@ -17,53 +17,54 @@ import org.springframework.stereotype.Component;
 public class KafkaOrderEventProducer {
 
     @Autowired
-    private final KafkaTemplate<String, OrderCreated> orderCreatedKafkaTemplate;
+    private final KafkaTemplate<Integer, String> orderCreatedKafkaTemplate;
 
     @Autowired
-    private final KafkaTemplate<String, OrderUpdated> orderUpdatedKafkaTemplate;
+    private final KafkaTemplate<Integer, String> orderUpdatedKafkaTemplate;
 
     @Autowired
-    private final KafkaTemplate<String, OrderDeleted> orderDeletedKafkaTemplate;
+    private final KafkaTemplate<Integer, String> orderDeletedKafkaTemplate;
 
     @Value("${spring.kafka.topic.order}")
     private String orderTopic;
 
-    public KafkaOrderEventProducer(KafkaTemplate<String, OrderCreated> orderCreatedKafkaTemplate,
-                                   KafkaTemplate<String, OrderUpdated> orderUpdatedKafkaTemplate,
-                                   KafkaTemplate<String, OrderDeleted> orderDeletedKafkaTemplate) {
+    public KafkaOrderEventProducer(KafkaTemplate<Integer, String> orderCreatedKafkaTemplate, KafkaTemplate<Integer, String> orderUpdatedKafkaTemplate,
+                                   KafkaTemplate<Integer, String> orderDeletedKafkaTemplate) {
         this.orderCreatedKafkaTemplate = orderCreatedKafkaTemplate;
         this.orderUpdatedKafkaTemplate = orderUpdatedKafkaTemplate;
         this.orderDeletedKafkaTemplate = orderDeletedKafkaTemplate;
     }
 
     public void sendOrderEventCreated(Order order) {
-        OrderCreated.newBuilder();
         OrderCreated orderCreated = OrderCreated.newBuilder()
+            .setOrderId(order.getId())
             .setNumber(order.getNumber())
             .setOrderStatus(OrderStatus.valueOf(order.getOrderStatus().name()))
             .build();
 
-        orderCreatedKafkaTemplate.send(orderTopic, orderCreated.getOrderId().toString(), orderCreated);
+        orderCreatedKafkaTemplate.send(orderTopic, orderCreated.getOrderId().intValue(), orderCreated.toString());
         log.info("Order Created event {} sent to topic: {}", orderCreated, orderTopic);
     }
 
     public void sendOrderEventUpdated(Order order) {
         OrderUpdated orderUpdated = OrderUpdated.newBuilder()
+            .setOrderId(order.getId())
             .setNumber(order.getNumber())
             .setOrderStatus(OrderStatus.valueOf(order.getOrderStatus().name()))
             .build();
 
-        orderUpdatedKafkaTemplate.send(orderTopic, orderUpdated.getOrderId().toString(), orderUpdated);
+        orderUpdatedKafkaTemplate.send(orderTopic, orderUpdated.getOrderId().intValue(), orderUpdated.toString());
         log.info("Order Updated event {} sent to topic: {}", orderUpdated, orderTopic);
     }
 
     public void sendOrderEventDeleted(Order order) {
         OrderDeleted orderDeleted = OrderDeleted.newBuilder()
+            .setOrderId(order.getId())
             .setNumber(order.getNumber())
             .setOrderStatus(OrderStatus.valueOf(order.getOrderStatus().name()))
             .build();
 
-        orderDeletedKafkaTemplate.send(orderTopic, orderDeleted.getOrderId().toString(), orderDeleted);
+        orderDeletedKafkaTemplate.send(orderTopic, orderDeleted.getOrderId().intValue(), orderDeleted.toString());
         log.info("Order Deleted event {} sent to topic: {}", orderDeleted, orderTopic);
     }
 }

@@ -54,6 +54,10 @@ CREATE TABLE `roles`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
+INSERT INTO roles (name) VALUES ('ROLE_USER');
+INSERT INTO roles (name) VALUES ('ROLE_MANAGER');
+INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
+
 CREATE TABLE `user_roles`
 (
     `user_id` BIGINT NOT NULL,

@@ -23,8 +23,8 @@ public class AutoCreateConfig {
     public NewTopic orderTopic() {
         return TopicBuilder
             .name(orderTopic)
-            .partitions(3)
-            .replicas(3)
+            .partitions(1)
+            .replicas(1)
             .build();
     }
 
@@ -32,8 +32,8 @@ public class AutoCreateConfig {
     public NewTopic itemTopic() {
         return TopicBuilder
             .name(itemTopic)
-            .partitions(3)
-            .replicas(3)
+            .partitions(1)
+            .replicas(1)
             .build();
     }
 
@@ -41,8 +41,8 @@ public class AutoCreateConfig {
     public NewTopic paymentTopic() {
         return TopicBuilder
             .name(paymentTopic)
-            .partitions(3)
-            .replicas(3)
+            .partitions(1)
+            .replicas(1)
             .build();
     }
 }

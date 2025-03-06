@@ -35,5 +35,6 @@ public class SignupRequest {
     @Size(min = 6, max = 40)
     private String password;
 
+    @NotEmpty
     private Set<String> role;
 }
