@@ -1,7 +1,5 @@
 package com.gbsfo.ecommerce.service;
 
-import java.util.Optional;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gbsfo.ecommerce.domain.OrderEvent;
