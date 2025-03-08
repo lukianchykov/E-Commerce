@@ -39,34 +39,34 @@ public class KafkaItemEventProducer {
 
     public void sendItemEventCreated(Item item) {
         ItemCreated itemCreated = ItemCreated.newBuilder()
-            .setItemId(item.getId())
+            .setId(item.getId())
             .setName(item.getName())
             .setPrice(ByteBuffer.wrap(item.getPrice().toPlainString().getBytes(StandardCharsets.UTF_8)))
             .build();
 
-        itemCreatedKafkaTemplate.send(itemTopic, itemCreated.getItemId().intValue(), itemCreated.toString());
+        itemCreatedKafkaTemplate.send(itemTopic, itemCreated.getId().intValue(), itemCreated.toString());
         log.info("Item Created event {} sent to topic: {}", itemCreated, itemTopic);
     }
 
     public void sendItemEventUpdated(Item item) {
         ItemUpdated itemUpdated = ItemUpdated.newBuilder()
-            .setItemId(item.getId())
+            .setId(item.getId())
             .setName(item.getName())
             .setPrice(ByteBuffer.wrap(item.getPrice().toPlainString().getBytes(StandardCharsets.UTF_8)))
             .build();
 
-        itemUpdatedKafkaTemplate.send(itemTopic, itemUpdated.getItemId().intValue(), itemUpdated.toString());
+        itemUpdatedKafkaTemplate.send(itemTopic, itemUpdated.getId().intValue(), itemUpdated.toString());
         log.info("Item Updated event {} sent to topic: {}", itemUpdated, itemTopic);
     }
 
     public void sendItemEventDeleted(Item item) {
         ItemDeleted itemDeleted = ItemDeleted.newBuilder()
-            .setItemId(item.getId())
+            .setId(item.getId())
             .setName(item.getName())
             .setPrice(ByteBuffer.wrap(item.getPrice().toPlainString().getBytes(StandardCharsets.UTF_8)))
             .build();
 
-        itemDeletedKafkaTemplate.send(itemTopic, itemDeleted.getItemId().intValue(), itemDeleted.toString());
+        itemDeletedKafkaTemplate.send(itemTopic, itemDeleted.getId().intValue(), itemDeleted.toString());
         log.info("Item Deleted event {} sent to topic: {}", itemDeleted, itemTopic);
     }
 }

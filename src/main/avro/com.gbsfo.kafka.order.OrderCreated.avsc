@@ -3,7 +3,7 @@
   "name" : "OrderCreated",
   "namespace" : "com.gbsfo.kafka.order",
   "fields" : [ {
-    "name" : "order_id",
+    "name" : "id",
     "type" : "long",
     "doc" : "Order's ID"
   }, {

@@ -40,37 +40,37 @@ public class KafkaPaymentEventProducer {
 
     public void sendPaymentEventCreated(Payment payment) {
         PaymentCreated paymentCreated = PaymentCreated.newBuilder()
-            .setPaymentId(payment.getId())
+            .setId(payment.getId())
             .setNumber(payment.getNumber())
             .setSum(ByteBuffer.wrap(payment.getSum().toPlainString().getBytes(StandardCharsets.UTF_8)))
             .setPaymentDateTime(payment.getPaymentDateTime().toEpochMilli())
             .build();
 
-        paymentCreatedKafkaTemplate.send(paymentTopic, paymentCreated.getPaymentId().intValue(), paymentCreated.toString());
+        paymentCreatedKafkaTemplate.send(paymentTopic, paymentCreated.getId().intValue(), paymentCreated.toString());
         log.info("Payment Created event {} sent to topic: {}", paymentCreated, paymentTopic);
     }
 
     public void sendPaymentEventUpdated(Payment payment) {
         PaymentUpdated paymentUpdated = PaymentUpdated.newBuilder()
-            .setPaymentId(payment.getId())
+            .setId(payment.getId())
             .setNumber(payment.getNumber())
             .setSum(ByteBuffer.wrap(payment.getSum().toPlainString().getBytes(StandardCharsets.UTF_8)))
             .setPaymentDateTime(payment.getPaymentDateTime().toEpochMilli())
             .build();
 
-        paymentUpdatedKafkaTemplate.send(paymentTopic, paymentUpdated.getPaymentId().intValue(), paymentUpdated.toString());
+        paymentUpdatedKafkaTemplate.send(paymentTopic, paymentUpdated.getId().intValue(), paymentUpdated.toString());
         log.info("Payment Updated event {} sent to topic: {}", paymentUpdated, paymentTopic);
     }
 
     public void sendPaymentEventDeleted(Payment payment) {
         PaymentDeleted paymentDeleted = PaymentDeleted.newBuilder()
-            .setPaymentId(payment.getId())
+            .setId(payment.getId())
             .setNumber(payment.getNumber())
             .setSum(ByteBuffer.wrap(payment.getSum().toPlainString().getBytes(StandardCharsets.UTF_8)))
             .setPaymentDateTime(payment.getPaymentDateTime().toEpochMilli())
             .build();
 
-        paymentDeletedKafkaTemplate.send(paymentTopic, paymentDeleted.getPaymentId().intValue(), paymentDeleted.toString());
+        paymentDeletedKafkaTemplate.send(paymentTopic, paymentDeleted.getId().intValue(), paymentDeleted.toString());
         log.info("Payment Deleted event {} sent to topic: {}", paymentDeleted, paymentTopic);
     }
 }

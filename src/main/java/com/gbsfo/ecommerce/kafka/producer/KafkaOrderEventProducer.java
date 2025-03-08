@@ -37,34 +37,34 @@ public class KafkaOrderEventProducer {
 
     public void sendOrderEventCreated(Order order) {
         OrderCreated orderCreated = OrderCreated.newBuilder()
-            .setOrderId(order.getId())
+            .setId(order.getId())
             .setNumber(order.getNumber())
             .setOrderStatus(OrderStatus.valueOf(order.getOrderStatus().name()))
             .build();
 
-        orderCreatedKafkaTemplate.send(orderTopic, orderCreated.getOrderId().intValue(), orderCreated.toString());
+        orderCreatedKafkaTemplate.send(orderTopic, orderCreated.getId().intValue(), orderCreated.toString());
         log.info("Order Created event {} sent to topic: {}", orderCreated, orderTopic);
     }
 
     public void sendOrderEventUpdated(Order order) {
         OrderUpdated orderUpdated = OrderUpdated.newBuilder()
-            .setOrderId(order.getId())
+            .setId(order.getId())
             .setNumber(order.getNumber())
             .setOrderStatus(OrderStatus.valueOf(order.getOrderStatus().name()))
             .build();
 
-        orderUpdatedKafkaTemplate.send(orderTopic, orderUpdated.getOrderId().intValue(), orderUpdated.toString());
+        orderUpdatedKafkaTemplate.send(orderTopic, orderUpdated.getId().intValue(), orderUpdated.toString());
         log.info("Order Updated event {} sent to topic: {}", orderUpdated, orderTopic);
     }
 
     public void sendOrderEventDeleted(Order order) {
         OrderDeleted orderDeleted = OrderDeleted.newBuilder()
-            .setOrderId(order.getId())
+            .setId(order.getId())
             .setNumber(order.getNumber())
             .setOrderStatus(OrderStatus.valueOf(order.getOrderStatus().name()))
             .build();
 
-        orderDeletedKafkaTemplate.send(orderTopic, orderDeleted.getOrderId().intValue(), orderDeleted.toString());
+        orderDeletedKafkaTemplate.send(orderTopic, orderDeleted.getId().intValue(), orderDeleted.toString());
         log.info("Order Deleted event {} sent to topic: {}", orderDeleted, orderTopic);
     }
 }

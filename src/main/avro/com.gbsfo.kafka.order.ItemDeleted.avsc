@@ -4,7 +4,7 @@
   "namespace" : "com.gbsfo.kafka.item",
   "fields" : [
     {
-      "name" : "item_id",
+      "name" : "id",
       "type" : "long",
       "doc" : "Item's ID"
     }, {

@@ -4,7 +4,7 @@
   "namespace" : "com.gbsfo.kafka.payment",
   "fields" : [
     {
-      "name" : "payment_id",
+      "name" : "id",
       "type" : "long",
       "doc" : "Payment's ID"
     }, {
