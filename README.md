@@ -8,23 +8,14 @@
 - <b> MySQL</b>
 - <b> Flyway</b>
 - <b> Docker</b>
-
-## Development environments
-Before starting an app or tests check environment variables must be set in `.env` file. Example:
-
-    MYSQL_ECOMMERCE_DATABASE=...
-    MYSQL_ECOMMERCE_USER=...
-    MYSQL_ECOMMERCE_PASSWORD=...
-    MYSQL_ROOT_PASSWORD=...
-    MYSQL_ROOT_USER=...
-    ...
+- <b> Kafka</b>
 
 ## To start application:
 ```bash
 docker-compose up
 ```
 
-Docker will pull the MySQL and Spring Boot images (if our machine does not have it before).
+Docker will pull the MySQL
 
 The services can be run on the background with command:
 ```bash
